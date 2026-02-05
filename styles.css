@@ -340,25 +340,135 @@ h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 
 .skill-card.no-cert { cursor: default; }
 
 /* =========================================
-   6. MODAL
+   6. MODAL (ARREGLO DEFINITIVO MÓVIL Y PC)
    ========================================= */
-.modal {
-    display: none; position: fixed; z-index: 2000; left: 0; top: 0;
-    width: 100%; height: 100%; background-color: rgba(0,0,0,0.95);
-    justify-content: center; align-items: center; flex-direction: column;
-    opacity: 0; transition: opacity 0.3s ease;
-}
-.modal.active { display: flex; opacity: 1; }
-.modal-content { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-.close-modal { position: absolute; top: 20px; right: 30px; color: #ff3333; font-size: 40px; cursor: pointer; }
-.modal-caption { color: white; margin-top: 1rem; font-size: 1.2rem; text-align: center; }
 
-/* Botones Navegación Modal */
-.modal-nav { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3rem; cursor: pointer; padding: 20px; z-index: 2001; }
-.modal-nav:hover { color: var(--accent-color); }
+/* 1. EL FONDO OSCURO (Contenedor Principal) */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0; 
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.95); /* Fondo negro profundo */
+    
+    /* FLEXBOX: Esto centra todo automáticamente */
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+    
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+    padding: 0; /* Sin relleno para aprovechar toda la pantalla */
+}
+
+.modal.active { 
+    display: flex; 
+    opacity: 1; 
+}
+
+/* 2. LA IMAGEN DEL CERTIFICADO (Reglas estrictas con ID) */
+#img01 {
+    /* REGLA DE ORO: Unidades VW/VH (Viewport Width/Height) */
+    /* Esto significa: "Nunca ocupes más del 95% del ancho de la pantalla" */
+    max-width: 95vw !important; 
+    
+    /* Esto significa: "Nunca ocupes más del 70% de la altura" (Para dejar espacio al texto) */
+    max-height: 70vh !important;
+    
+    width: auto !important;   /* Deja que el navegador calcule el ancho según la altura */
+    height: auto !important;  /* Deja que el navegador calcule la altura según el ancho */
+    
+    object-fit: contain;      /* Muestra la imagen completa, sin recortar */
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+    
+    /* Animación de entrada */
+    animation: zoomIn 0.3s ease;
+    
+    /* Centrado */
+    display: block;
+    margin: 0 auto;
+}
+
+/* 3. EL TEXTO DEBAJO DE LA IMAGEN */
+.modal-caption { 
+    color: #f1f1f1;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 1rem;
+    width: 90%; /* Ancho seguro para que no pegue en los bordes */
+    max-width: 600px;
+    line-height: 1.4;
+}
+
+/* 4. BOTONES DE CONTROL */
+
+/* La X de cerrar */
+.close-modal { 
+    position: absolute; 
+    top: 15px; 
+    right: 20px; 
+    color: #ff4444; 
+    font-size: 40px; 
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2010;
+    line-height: 1;
+    
+    /* Fondo semitransparente por si la imagen es blanca y queda debajo */
+    background: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    display: flex; justify-content: center; align-items: center;
+}
+
+/* Flechas izquierda/derecha */
+.modal-nav { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    color: white; 
+    font-size: 2.5rem; /* Un poco más chicas para móvil */
+    cursor: pointer; 
+    padding: 20px; 
+    z-index: 2005; 
+    background: rgba(0,0,0,0.3); /* Fondo sutil para verlas mejor */
+    border-radius: 50%;
+    width: 60px; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+}
+
 .prev-btn { left: 10px; }
 .next-btn { right: 10px; }
-.hidden { display: none; }
+.hidden { display: none !important; }
+
+/* Animación */
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* =========================================
+   AJUSTE ESPECÍFICO PARA CONTACTO (No tocar imagen)
+   ========================================= */
+/* Como borramos la clase genérica, definimos el contacto aquí aparte */
+#contactModal .modal-content {
+    background-color: #0a0a0a;
+    margin: auto;
+    padding: 2rem;
+    border: 1px solid var(--accent-color);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto; /* Scroll si el formulario es muy largo en móvil */
+}
 
 /* =========================================
    7. PROYECTOS Y FOOTER
