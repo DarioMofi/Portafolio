@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Dario M - Urbanista</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+        (function(){
+            emailjs.init("HcTpgrjXRwSNkhnsP");
+        })();
+    </script>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <i class='bx bxs-city'></i> URBAN DATA DEV
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero"><i class='bx bx-home-alt-2'></i> Inicio</a></li>
+                <li><a href="#skills"><i class='bx bx-code-alt'></i> Formación</a></li>
+                <li><a href="#projects"><i class='bx bx-map-alt'></i> Proyectos</a></li>
+                <li>
+                    <a href="#" id="open-modal-header">
+                        <i class='bx bx-envelope'></i> Contacto
+                    </a>
+                </li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero-section">
+
+        <div class="hero-image">
+            <img src="assets/FotoP.jpeg" alt="Foto de perfil">
+        </div>
+
+        <div class="hero-content">
+            <h1>Dario Molina Figueroa</h1>
+            <h2>Urbanista & Desarrollador</h2>
+            
+            <p>Los datos son la mayor fuente de información sobre lo que sucede en las ciudades. Podemos conocer desde cuántas personas viven en una colonia, hacia dónde van y a qué hora vuelven, hasta qué zona presenta mayores índices de inseguridad, el alcance de los servicios urbanos o cómo se modifica la dinámica social ante el cambio de cierto uso de suelo.</p>
+            
+            <p>Sin embargo, los datos solo son una abstracción; necesitamos conocer el contexto social, político y económico específico de cada territorio donde planeamos trabajar. Ahí es donde entro yo. Mi nombre es Darío Molina, soy urbanista con habilidades de programación, enfocado en ofrecer un entendimiento del territorio para tomar la mejor decisión posible.</p>
+            
+            <div class="hero-social">
+                <a href="https://linkedin.com/in/tu-usuario" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                <a href="https://github.com/tu-usuario" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
+                <a href="https://x.com/dario_eme" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="assets/CV_Dario Molina Figueroa.pdf" download class="cv-download" title="Descargar CV"><i class='bx bxs-file-pdf'></i> CV</a>
+            </div>
+            
+            <a href="#projects" class="btn-primary">MAPAS INTERACTIVOS</a>
+        </div>
+
+    </section>
+
+    <section id="skills" class="skills-section">
+        <h3>Habilidades y Tecnologías</h3>
+        <p class="section-subtitle">Desliza para ver mis competencias Técnicas (Clic al centro para detalles)</p>
+        
+        <div class="skills-container">
+            <div class="skills-wrapper">
+                
+                <div class="skill-card" 
+                     data-type="web" 
+                     data-title="Desarrollo Web - Alura" 
+                     data-images='["assets/certificados/html-css1.jpg", "assets/certificados/html-css2.jpg", "assets/certificados/html-css3.jpg", "assets/certificados/html-css4.jpg"]'>
+                    <div class="icons-row">
+                        <i class='bx bxl-html5 skill-icon'></i>
+                        <i class='bx bxl-css3 skill-icon'></i> 
+                    </div>
+                    <h4>HTML5 & CSS3</h4>
+                    <p>Estructura y diseño en desarrollo web.</p>
+                    <small><i class='bx bx-check-circle'></i> Ver Certificados</small>
+                </div>
+
+                <div class="skill-card" 
+                     data-type="js" 
+                     data-title="Lógica de Programación JavaScript- Alura"
+                     data-images='["assets/certificados/logica-javascript.jpg", "assets/certificados/logica-javascript1.jpg"]'>
+                    <i class='bx bxl-javascript skill-icon'></i>
+                    <h4>JavaScript</h4>
+                    <p>Funcionalidad y escalabilidad web.</p>
+                    <small><i class='bx bx-check-circle'></i> Ver Certificados</small>
+                </div>
+
+                <div class="skill-card" 
+                     data-type="data" 
+                     data-title="Python: Fundamentos - Varios"
+                     data-images='["assets/certificados/python.jpg","assets/certificados/python1.jpg", "assets/certificados/python2.jpg", "assets/certificados/python3.jpg","assets/certificados/pandas.jpg","assets/certificados/geo-int.jpg","assets/certificados/numpy.jpg", "assets/certificados/pandas1.jpg"]'>
+                    <i class='bx bxl-python skill-icon'></i>
+                    <h4>Python</h4>
+                    <p>Análisis de datos, automatización y manejo de bibliotecas.</p>
+                    <small><i class='bx bx-check-circle'></i> Ver Certificados</small>
+                </div>
+
+                <div class="skill-card" 
+                     data-type="tools" 
+                     data-title="Sistema Git y plataforma Github - Alura"
+                     data-images='["assets/certificados/Git.jpg"]'>
+                    <i class='bx bxl-git skill-icon'></i>
+                    <h4>Git y Github</h4>
+                    <p>Creación de repositorios y control de versiones.</p>
+                    <small><i class='bx bx-check-circle'></i> Ver Certificado</small>
+                </div>
+
+                <div class="skill-card" 
+                     data-type="gis" 
+                     data-title="Visualización y Análisis Datos Geográficos - Varios"
+                     data-images='["assets/certificados/VD.jpg", "assets/certificados/modeladoBD.jpg"]'>
+                    <i class='bx bx-data skill-icon'></i>
+                    <h4>Bases de Datos</h4>
+                    <p>Procesamiento y visualización de datos geográficos.</p>
+                    <small><i class='bx bx-check-circle'></i> Ver Certificados</small>
+                </div>
+
+                <div class="skill-card no-cert" data-type="gis">
+                    <i class='bx bx-map-alt skill-icon'></i>
+                    <h4>QGIS & Sistemas SIG</h4>
+                    <p>Análisis espacial avanzado.</p>
+                    <small>Experiencia en Proyectos</small>
+                </div>
+
+            </div> 
+        </div> 
+    </section>
+
+    <div id="certModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption" class="modal-caption"></div>
+    </div>
+
+    <section id="projects" class="projects-section">
+        <h3>Proyectos</h3>
+        <div class="projects-grid">
+            <article class="project-card">
+                <div class="project-image">
+                    <img src="assets/images/preview-tesis.jpg" alt="Mapa Inmobiliario Benito Juárez">
+                </div>
+                <div class="project-info">
+                    <h4>Análisis Inmobiliario: Alcaldía Benito Juárez</h4>
+                    <p>Geo-visualizador interactivo sobre el desarrollo inmobiliario y plusvalía.</p>
+                    <ul class="tags">
+                        <li>Leaflet</li>
+                        <li>Análisis Espacial</li>
+                        <li>Python</li>
+                    </ul>
+                    <a href="projects/tesis-bj/index.html" class="btn-secondary" target="_blank">Explorar Mapa Completo &rarr;</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            
+            <div class="footer-cta">
+                <h3>¿Algún proyecto en mente?</h3>
+                <p>Conectemos datos y territorio.</p>
+                <a href="#" id="open-modal-footer" class="footer-email">
+                    <i class='bx bx-envelope'></i> dariom5457@gmail.com
+                </a>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://linkedin.com/in/tu-usuario" target="_blank"><i class='bx bxl-linkedin'></i></a>
+                <a href="https://github.com/tu-usuario" target="_blank"><i class='bx bxl-github'></i></a>
+                <a href="https://x.com/dario_eme" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; Powered by Dario Molina.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Envíame un mensaje</h2>
+            
+            <form id="contact-form" class="contact-form">
+                <label for="user_name">Tu Nombre:</label>
+                <input type="text" name="user_name" id="user_name" placeholder="Tu nombre" required>
+
+                <label for="user_email">Tu Correo:</label>
+                <input type="email" name="user_email" id="user_email" placeholder="ejemplo@correo.com" required>
+                
+                <label for="message">Mensaje:</label>
+                <textarea name="message" id="message" rows="5" placeholder="Hola Darío..." required></textarea>
+                
+                <button type="submit" id="btn-submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">ENVIAR CORREO</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+    <script src="javascript.js"></script>
+</body>
+</html>

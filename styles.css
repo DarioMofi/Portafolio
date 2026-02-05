@@ -1,0 +1,580 @@
+/* =========================================
+   1. VARIABLES GLOBALES
+   ========================================= */
+:root {
+    --bg-color: #0c0c0c;
+    --card-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-color: #3ca10d;
+    --accent-hover: #3766c2;
+    --highlight: #6396ff;
+    --border-radius: 12px;
+    --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    --glow: 0 0 15px rgba(124, 77, 255, 0.4);
+    --transition: all 0.3s ease;
+    
+    /* Colores de habilidades */
+    --col-web: #da440d;
+    --col-js: #c2880c;
+    --col-data: #1253a7;
+    --col-gis: #0b791a;
+    --col-tools: #8616a1;
+}
+
+/* =========================================
+   2. RESET & ESTILOS BASE
+   ========================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-color);
+    background-image: radial-gradient(circle at top right, rgba(124, 77, 255, 0.1), transparent 40%);
+    overflow-x: hidden; /* Evita scroll horizontal global */
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* Iconos */
+i { vertical-align: middle; margin-right: 5px; }
+.skill-icon { font-size: 3rem; margin-bottom: 0.5rem; display: block; }
+.icons-row { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; }
+.icons-row .skill-icon { margin-bottom: 0; }
+
+/* =========================================
+   3. NAVEGACIÓN (HEADER)
+   ========================================= */
+.main-header {
+    background: rgba(26, 26, 26, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 5%;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+nav { display: flex; justify-content: space-between; align-items: center; }
+
+.logo { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); letter-spacing: 1px; display: flex; align-items: center; }
+.logo i { color: var(--accent-color); font-size: 1.8rem; }
+
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); color: var(--text-secondary); display: flex; align-items: center; }
+.nav-links a:hover { color: var(--accent-color); text-shadow: var(--glow); }
+
+/* MENÚ HAMBURGUESA */
+.burger { display: none; cursor: pointer; }
+.burger div { width: 25px; height: 3px; background-color: var(--text-primary); margin: 5px; transition: var(--transition); }
+
+/* =========================================
+   RESPONSIVIDAD (MÓVIL)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. HERO: FOTO ARRIBA, TEXTO ABAJO */
+    .hero-section {
+        /* "column" pone primero el primer div del HTML (Foto) y luego el segundo (Texto) */
+        /* Si en tu HTML la foto está primero, usa 'column'. Si el texto está primero, usa 'column-reverse' */
+        flex-direction: column; 
+        text-align: center;
+        padding-top: 2rem;
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    .hero-content {
+        padding-right: 0;
+        margin-top: 1rem;
+    }
+    
+    .hero-image img {
+        width: 250px; /* Un poco más pequeña en móvil */
+        height: 250px; /* Hacemos cuadrada la foto o ajustamos según prefieras */
+        margin: 0 auto; /* Centrar imagen */
+    }
+
+    /* 2. NAVEGACIÓN: ICONOS HORIZONTALES (SIN HAMBURGUESA) */
+    .burger {
+        display: none !important; /* Ocultamos el botón de menú */
+    }
+
+    .nav-links {
+        position: static; /* Quitamos posición absoluta */
+        height: auto;
+        width: auto;
+        background-color: transparent;
+        box-shadow: none;
+        transform: translate(0); /* Visible siempre */
+        flex-direction: row; /* En fila horizontal */
+        gap: 1.5rem; /* Espacio entre iconos */
+        padding: 0;
+    }
+
+    .nav-links li {
+        opacity: 1; /* Visibles sin animación */
+        margin: 0;
+    }
+
+    /* TRUCO: Ocultar texto y dejar solo iconos */
+    .nav-links a {
+        font-size: 0; /* Oculta el texto "Inicio", "Proyectos", etc. */
+    }
+
+    .nav-links a i {
+        font-size: 1.8rem; /* Hacemos los iconos grandes y visibles */
+        color: var(--text-secondary);
+        display: block; /* Asegura que se comporten bien */
+    }
+    
+    /* Ajuste del header para que quepan logo e iconos */
+    .main-header {
+        padding: 0.8rem 5%;
+    }
+    
+    nav {
+        justify-content: space-between; /* Logo a la izq, Iconos a la der */
+        width: 100%;
+    }
+    
+    .logo {
+        font-size: 1.2rem; /* Logo un poco más pequeño para dar espacio */
+    }
+
+    #contactModal .modal-content {
+        width: 95%;        /* Ocupar casi todo el ancho de la pantalla */
+        margin: 20% auto;  /* Bajarlo un poco más para que no quede pegado al techo */
+        padding: 1.2rem;   /* Reducir el relleno interno (antes era 2rem) */
+    }
+
+    #contactModal h2 {
+        font-size: 1.5rem; /* Título un poco más pequeño para que no ocupe tanto */
+    }
+
+    /* Ajuste para que el botón de cerrar sea más fácil de tocar con el dedo */
+    #contactModal .close-btn {
+        font-size: 32px;
+        padding: 5px;      /* Aumentar área táctil */
+        line-height: 1;
+    }
+}
+
+.nav-active { transform: translateX(0%); }
+@keyframes navLinkFade { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0px); } }
+.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+.toggle .line2 { opacity: 0; }
+.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+
+/* =========================================
+   4. HERO
+   ========================================= */
+.hero-section {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: center;
+    gap: 10rem;
+    padding: 4rem 5% 4rem;
+    min-height: 90vh;
+    position: relative;
+}
+
+.hero-section::after {
+    content: ''; position: absolute; top: -10%; right: -10%; width: 40%; height: 40%;
+    background: var(--accent-color); filter: blur(150px); opacity: 0.2; z-index: 0;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 800px; 
+}
+
+.hero-content h1 { 
+    font-size: 3.5rem; 
+    font-weight: 900; 
+    margin-bottom: 0.5rem; 
+    line-height: 1.1; 
+    background: linear-gradient(to right, var(--text-primary), var(--accent-color)); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; }
+.hero-content h2 { 
+    font-size: 1.5rem; 
+    color: var(--text-primary); 
+    margin-bottom: 1.5rem; 
+    font-weight: 700; }
+.hero-content p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+    text-align: justify; 
+}
+
+/* FOTO DE PERFIL */
+.hero-image img {
+    width: 305px;
+    height: 490px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 4px solid var(--accent-color);
+    box-shadow: var(--shadow), var(--glow);
+    transition: all 0.3s ease;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Botones */
+.btn-primary, .btn-secondary { display: inline-flex; align-items: center; padding: 0.8rem 2rem; border-radius: 50px; margin-top: 1rem; transition: var(--transition); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; cursor: pointer; }
+.btn-primary { background-color: var(--accent-color); color: white; box-shadow: 0 4px 15px rgba(124, 77, 255, 0.3); }
+.btn-primary:hover { background-color: var(--accent-hover); transform: translateY(-3px); }
+.btn-secondary { background-color: transparent; border: 2px solid var(--text-secondary); color: var(--text-primary); margin-left: 1rem; }
+.btn-secondary:hover { border-color: var(--highlight); color: var(--highlight); }
+
+.hero-social {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Espacio entre iconos */
+    margin-bottom: 2rem; /* Espacio antes del botón grande */
+}
+
+/* Estilo para los iconos de redes (LinkedIn, GitHub, X) */
+.hero-social a i {
+    font-size: 2rem;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.hero-social a:hover i {
+    color: var(--accent-color); /* Se ilumina morado al pasar el mouse */
+    transform: translateY(-3px);
+    text-shadow: var(--glow);
+}
+
+/* Estilo especial para el botón de CV */
+.cv-download {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+    color: var(--text-primary); /* Texto blanco */
+    border: 1px solid var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.cv-download i {
+    font-size: 1.2rem !important; /* Forzamos tamaño para que encaje */
+    color: var(--accent-color) !important; /* Icono PDF en color acento */
+    margin: 0;
+}
+
+.cv-download:hover {
+    background: rgba(124, 77, 255, 0.1); /* Fondo sutil al hover */
+    box-shadow: 0 0 15px rgba(124, 77, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   5. CARRUSEL 3D (SKILLS)
+   ========================================= */
+section { padding: 4rem 5%; background-color: var(--bg-color); }
+h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; }
+.section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 4rem; }
+
+.skills-container {
+    width: 100%; height: 450px; position: relative; overflow: hidden;
+    display: flex; justify-content: center; align-items: center;
+    perspective: 1000px; margin-top: 2rem;
+}
+
+.skills-wrapper {
+    position: relative; width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.skill-card {
+    position: absolute;
+    width: 280px; height: 350px;
+    background: var(--card-bg);
+    border-radius: 15px; padding: 2rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    opacity: 0; z-index: 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+/* ESTADOS DE POSICIÓN (Lógica Circular) */
+
+/* ACTIVA (Centro) */
+.skill-card.active {
+    opacity: 1; 
+    z-index: 10; 
+    transform: translateX(0) scale(1);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+}
+
+/* VECINOS CERCANOS */
+.skill-card.prev {
+    opacity: 0.8; 
+    z-index: 5;
+    transform: translateX(-340px) scale(0.85) rotateY(20deg); 
+}
+
+.skill-card.next {
+    opacity: 0.8; 
+    z-index: 5;
+    transform: translateX(340px) scale(0.85) rotateY(-20deg);
+}
+
+/* VECINOS LEJANOS */
+.skill-card.far-prev { 
+    opacity: 0.4; 
+    z-index: 2; 
+    transform: translateX(-650px) scale(0.7) rotateY(30deg); 
+    display: flex;
+}
+
+.skill-card.far-next { 
+    opacity: 0.4; 
+    z-index: 2; 
+    transform: translateX(650px) scale(0.7) rotateY(-30deg); 
+    display: flex;
+}
+
+/* TARJETA FANTASMA (La 6ta tarjeta) */
+.skill-card.hidden-card {
+    opacity: 0;
+    z-index: 0;
+    transform: translateX(0) scale(0); /* Se encoge en el centro hasta desaparecer */
+    pointer-events: none; /* No se puede clickear */
+}
+
+/* REGLAS RESPONSIVAS PARA MÓVIL (Importante para que no desaparezcan)*/
+@media (max-width: 768px) {
+    .skill-card { width: 240px; height: 320px; }
+    .skill-card.prev { transform: translateX(-120px) scale(0.8) rotateY(10deg); opacity: 0.4; }
+    .skill-card.next { transform: translateX(120px) scale(0.8) rotateY(-10deg); opacity: 0.4; }
+    
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-section { flex-direction: column; text-align: center; padding-top: 6rem; }
+    .hero-content { padding-right: 0; margin-top: 2rem; }
+} 
+
+
+/* COLORES DINÁMICOS (Solo en active) */
+.skill-card.active[data-type="web"] { border-color: var(--col-web); box-shadow: 0 0 30px var(--col-web); }
+.skill-card.active[data-type="js"] { border-color: var(--col-js); box-shadow: 0 0 30px var(--col-js); }
+.skill-card.active[data-type="data"] { border-color: var(--col-data); box-shadow: 0 0 30px var(--col-data); }
+.skill-card.active[data-type="gis"] { border-color: var(--col-gis); box-shadow: 0 0 30px var(--col-gis); }
+.skill-card.active[data-type="tools"] { border-color: var(--col-tools); box-shadow: 0 0 30px var(--col-tools); }
+.skill-card.active i { color: inherit; } /* Hereda color si es necesario */
+
+.skill-card[data-type="web"] i { color: var(--col-web); }
+.skill-card[data-type="js"] i { color: var(--col-js); }
+.skill-card[data-type="data"] i { color: var(--col-data); }
+.skill-card[data-type="gis"] i { color: var(--col-gis); }
+.skill-card[data-type="tools"] i { color: var(--col-tools); }
+
+.skill-card.no-cert { cursor: default; }
+
+/* =========================================
+   6. MODAL
+   ========================================= */
+.modal {
+    display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+    width: 100%; height: 100%; background-color: rgba(0,0,0,0.95);
+    justify-content: center; align-items: center; flex-direction: column;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+.modal.active { display: flex; opacity: 1; }
+.modal-content { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+.close-modal { position: absolute; top: 20px; right: 30px; color: #ff3333; font-size: 40px; cursor: pointer; }
+.modal-caption { color: white; margin-top: 1rem; font-size: 1.2rem; text-align: center; }
+
+/* Botones Navegación Modal */
+.modal-nav { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 3rem; cursor: pointer; padding: 20px; z-index: 2001; }
+.modal-nav:hover { color: var(--accent-color); }
+.prev-btn { left: 10px; }
+.next-btn { right: 10px; }
+.hidden { display: none; }
+
+/* =========================================
+   7. PROYECTOS Y FOOTER
+   ========================================= */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+.project-card { background: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; transition: var(--transition); }
+.project-card:hover { transform: translateY(-7px); box-shadow: 0 0 20px rgba(124, 77, 255, 0.2); border: 1px solid var(--accent-color); }
+.project-image img { width: 100%; height: 220px; object-fit: cover; }
+.project-info { padding: 2rem; }
+.tags li { display: inline-block; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; }
+
+.footer {
+    background-color: #050505;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 1.5rem 5% 1rem;
+    text-align: center;
+    margin-top: auto; 
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Título y Texto de invitación */
+.footer-cta h3 {
+    font-size: 1.5rem; 
+    margin-bottom: 0; 
+    color: var(--text-primary);
+}
+
+.footer-cta p {
+    color: var(--text-secondary);
+    font-size: 1.01rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Enlace de correo destacado */
+.footer-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    transition: var(--transition);
+    padding: 0.25rem 0;
+}
+
+.footer-email:hover {
+    color: #fff;
+    text-shadow: var(--glow);
+    transform: translateY(-2px);
+}
+
+/* Redes Sociales en el Footer */
+.footer-social {
+    display: flex;
+    gap: 1.3rem;
+    margin: 0;
+}
+
+.footer-social a {
+    color: var(--text-secondary);
+    font-size: 1.3rem;
+    transition: var(--transition);
+    line-height: 1;
+}
+
+.footer-social a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* Copyright pequeño al final */
+.footer-bottom {
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1rem;
+    width: 100%;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    margin: 0;
+}
+
+/* --- ESTILOS DEL MODAL DE CONTACTO --- */
+#contactModal {
+    display: none; 
+    position: fixed; 
+    z-index: 9999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro */
+    backdrop-filter: blur(5px);
+    opacity: 1 !important;
+    animation: fadeIn 0.3s ease;
+}
+
+#contactModal .modal-content {
+    background-color: #0a0a0a; /* Fondo casi negro */
+    margin: 5% auto; /* Centrado */
+    padding: 2rem;
+    border: 1px solid var(--accent-color);
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(124, 77, 255, 0.2);
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+
+/* Botón de cerrar (X) */
+#contactModal .close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    line-height: 20px;
+}
+
+#contactModal .close-btn:hover {
+    color: var(--accent-color);
+}
+
+/* Inputs y Textarea */
+.contact-form label {
+    display: block;
+    margin-top: 1rem;
+    color: #ccc;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    resize: vertical; /* Permite estirar solo verticalmente */
+}
+
+.contact-form input:focus, 
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(124, 77, 255, 0.4);
+}
+
+/* Animaciones */
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+@keyframes slideDown { from {transform: translateY(-50px);} to {transform: translateY(0);} }
