@@ -371,26 +371,20 @@ h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 
 
 /* 2. LA IMAGEN DEL CERTIFICADO (Reglas estrictas con ID) */
 #img01 {
-    /* REGLA DE ORO: Unidades VW/VH (Viewport Width/Height) */
-    /* Esto significa: "Nunca ocupes más del 95% del ancho de la pantalla" */
+    /* ... tus reglas de tamaño (NO LAS TOQUES) ... */
     max-width: 95vw !important; 
-    
-    /* Esto significa: "Nunca ocupes más del 70% de la altura" (Para dejar espacio al texto) */
     max-height: 70vh !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
     
-    width: auto !important;   /* Deja que el navegador calcule el ancho según la altura */
-    height: auto !important;  /* Deja que el navegador calcule la altura según el ancho */
-    
-    object-fit: contain;      /* Muestra la imagen completa, sin recortar */
-    border-radius: 8px;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-    
-    /* Animación de entrada */
-    animation: zoomIn 0.3s ease;
-    
-    /* Centrado */
     display: block;
     margin: 0 auto;
+    
+    border: none; 
+    
+    /* 3. Sombra blanca suave (Opcional: Si quieres quitar el brillo verde, deja esta) */
+    box-shadow: 0 0 20px rgba(0,0,0,0.8); 
 }
 
 /* 3. EL TEXTO DEBAJO DE LA IMAGEN */
