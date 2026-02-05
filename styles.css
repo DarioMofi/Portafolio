@@ -7,11 +7,11 @@
     --text-primary: #ffffff;
     --text-secondary: #b3b3b3;
     --accent-color: #3ca10d;
-    --accent-hover: #3766c2;
-    --highlight: #6396ff;
+    --accent-hover: #139b7d;
+    --highlight: #169aac;
     --border-radius: 12px;
     --shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-    --glow: 0 0 15px rgba(124, 77, 255, 0.4);
+    --glow: 0 0 15px rgba(16, 106, 167, 0.4);
     --transition: all 0.3s ease;
     
     /* Colores de habilidades */
@@ -31,9 +31,67 @@ body {
     font-family: 'Montserrat', 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background-color: var(--bg-color);
-    background-image: radial-gradient(circle at top right, rgba(124, 77, 255, 0.1), transparent 40%);
-    overflow-x: hidden; /* Evita scroll horizontal global */
+    background-color: #0c0c0c;
+    background-image: none;
+    overflow-x: hidden;
+}
+.main-header, 
+section, 
+footer {
+    position: relative; /* Necesario para que funcione z-index */
+    z-index: 2; /* Los ponemos por encima del fondo (que es 0) */
+}
+/* =========================================
+   FONDO GLOBAL "ALIVE" (Arreglado)
+   ========================================= */
+
+/* 1. El Contenedor Global */
+.global-background {
+    position: fixed; /* Se queda quieto en la pantalla, no scrollea */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    z-index: 0;   /* Se va al fondo de todo */
+    pointer-events: none;
+    overflow: hidden; /* Evita barras de scroll si las manchas se mueven mucho */
+}
+
+/* 2. Las Manchas de Luz (Más grandes y suaves para integración) */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px); /* Desenfoque extremo para suavidad total */
+    opacity: 0.25; /* Más sutil para no molestar la lectura */
+}
+
+.blob-green {
+    background-color: var(--accent-color);
+    width: 600px;
+    height: 600px;
+    top: -150px;
+    left: -100px;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.blob-purple {
+    background-color: #14a37f;
+    width: 700px;
+    height: 700px;
+    bottom: -150px;
+    right: -150px;
+    animation: floatReverse 25s infinite alternate ease-in-out;
+}
+
+/* 3. Animación de "Respiración" */
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 50px) scale(1.1); }
+}
+
+@keyframes floatReverse {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-50px, -50px) scale(0.9); }
 }
 
 a { text-decoration: none; color: inherit; }
@@ -73,103 +131,7 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .burger { display: none; cursor: pointer; }
 .burger div { width: 25px; height: 3px; background-color: var(--text-primary); margin: 5px; transition: var(--transition); }
 
-/* =========================================
-   RESPONSIVIDAD (MÓVIL)
-   ========================================= */
-@media (max-width: 768px) {
-    
-    /* 1. HERO: FOTO ARRIBA, TEXTO ABAJO */
-    .hero-section {
-        /* "column" pone primero el primer div del HTML (Foto) y luego el segundo (Texto) */
-        /* Si en tu HTML la foto está primero, usa 'column'. Si el texto está primero, usa 'column-reverse' */
-        flex-direction: column; 
-        text-align: center;
-        padding-top: 2rem;
-        gap: 2rem;
-        justify-content: center;
-    }
 
-    .hero-content {
-        padding-right: 0;
-        margin-top: 1rem;
-    }
-    
-    .hero-image img {
-        width: 250px; /* Un poco más pequeña en móvil */
-        height: 250px; /* Hacemos cuadrada la foto o ajustamos según prefieras */
-        margin: 0 auto; /* Centrar imagen */
-    }
-
-    /* 2. NAVEGACIÓN: ICONOS HORIZONTALES (SIN HAMBURGUESA) */
-    .burger {
-        display: none !important; /* Ocultamos el botón de menú */
-    }
-
-    .nav-links {
-        position: static; /* Quitamos posición absoluta */
-        height: auto;
-        width: auto;
-        background-color: transparent;
-        box-shadow: none;
-        transform: translate(0); /* Visible siempre */
-        flex-direction: row; /* En fila horizontal */
-        gap: 1.5rem; /* Espacio entre iconos */
-        padding: 0;
-    }
-
-    .nav-links li {
-        opacity: 1; /* Visibles sin animación */
-        margin: 0;
-    }
-
-    /* TRUCO: Ocultar texto y dejar solo iconos */
-    .nav-links a {
-        font-size: 0; /* Oculta el texto "Inicio", "Proyectos", etc. */
-    }
-
-    .nav-links a i {
-        font-size: 1.8rem; /* Hacemos los iconos grandes y visibles */
-        color: var(--text-secondary);
-        display: block; /* Asegura que se comporten bien */
-    }
-    
-    /* Ajuste del header para que quepan logo e iconos */
-    .main-header {
-        padding: 0.8rem 5%;
-    }
-    
-    nav {
-        justify-content: space-between; /* Logo a la izq, Iconos a la der */
-        width: 100%;
-    }
-    
-    .logo {
-        font-size: 1.2rem; /* Logo un poco más pequeño para dar espacio */
-    }
-
-    #contactModal .modal-content {
-        width: 95%;        /* Ocupar casi todo el ancho de la pantalla */
-        margin: 20% auto;  /* Bajarlo un poco más para que no quede pegado al techo */
-        padding: 1.2rem;   /* Reducir el relleno interno (antes era 2rem) */
-    }
-
-    #contactModal h2 {
-        font-size: 1.5rem; /* Título un poco más pequeño para que no ocupe tanto */
-    }
-
-    /* Ajuste para que el botón de cerrar sea más fácil de tocar con el dedo */
-    #contactModal .close-btn {
-        font-size: 32px;
-        padding: 5px;      /* Aumentar área táctil */
-        line-height: 1;
-    }
-}
-
-.nav-active { transform: translateX(0%); }
-@keyframes navLinkFade { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0px); } }
-.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
-.toggle .line2 { opacity: 0; }
-.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
 
 /* =========================================
    4. HERO
@@ -288,7 +250,6 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 /* =========================================
    5. CARRUSEL 3D (SKILLS)
    ========================================= */
-section { padding: 4rem 5%; background-color: var(--bg-color); }
 h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; }
 .section-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 4rem; }
 
@@ -362,18 +323,6 @@ h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 
     pointer-events: none; /* No se puede clickear */
 }
 
-/* REGLAS RESPONSIVAS PARA MÓVIL (Importante para que no desaparezcan)*/
-@media (max-width: 768px) {
-    .skill-card { width: 240px; height: 320px; }
-    .skill-card.prev { transform: translateX(-120px) scale(0.8) rotateY(10deg); opacity: 0.4; }
-    .skill-card.next { transform: translateX(120px) scale(0.8) rotateY(-10deg); opacity: 0.4; }
-    
-    .hero-content h1 { font-size: 2.5rem; }
-    .hero-section { flex-direction: column; text-align: center; padding-top: 6rem; }
-    .hero-content { padding-right: 0; margin-top: 2rem; }
-} 
-
-
 /* COLORES DINÁMICOS (Solo en active) */
 .skill-card.active[data-type="web"] { border-color: var(--col-web); box-shadow: 0 0 30px var(--col-web); }
 .skill-card.active[data-type="js"] { border-color: var(--col-js); box-shadow: 0 0 30px var(--col-js); }
@@ -422,8 +371,15 @@ h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 
 .tags li { display: inline-block; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; margin-right: 5px; }
 
 .footer {
-    background-color: #050505;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    /* 1. Transparente para dejar ver el negro del body y la luz de proyectos si llega hasta ahí */
+    background-color: transparent; 
+    
+    /* 2. Opcional: Un gradiente muy sutil hacia negro total al final */
+    background-image: linear-gradient(to bottom, transparent, #0c0c0c);
+    
+    /* 3. IMPORTANTE: Quitamos la línea de corte */
+    border-top: none; 
+    
     padding: 1.5rem 5% 1rem;
     text-align: center;
     margin-top: auto; 
@@ -578,3 +534,82 @@ h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 
 /* Animaciones */
 @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
 @keyframes slideDown { from {transform: translateY(-50px);} to {transform: translateY(0);} }
+/* =========================================
+   ANIMACIONES DE NAVEGACIÓN (Deben ir fuera del media query)
+   ========================================= */
+.nav-active { transform: translateX(0%); }
+
+@keyframes navLinkFade { 
+    from { opacity: 0; transform: translateX(50px); } 
+    to { opacity: 1; transform: translateX(0px); } 
+}
+
+.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+.toggle .line2 { opacity: 0; }
+.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+
+
+/* =========================================
+   RESPONSIVIDAD (MÓVIL) - ¡TODO JUNTO AQUÍ AL FINAL!
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. HERO: FOTO ARRIBA */
+    .hero-section {
+        flex-direction: column; 
+        text-align: center;
+        padding-top: 2rem; /* Espacio correcto */
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    .hero-content {
+        padding-right: 0;
+        margin-top: 1rem;
+    }
+    
+    .hero-image img {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto;
+    }
+
+    /* 2. NAVEGACIÓN */
+    .burger { display: none !important; }
+
+    .nav-links {
+        position: static;
+        height: auto;
+        width: auto;
+        background-color: transparent;
+        box-shadow: none;
+        transform: translate(0);
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 0;
+    }
+
+    .nav-links li { opacity: 1; margin: 0; }
+    .nav-links a { font-size: 0; } /* Ocultar texto */
+    .nav-links a i { font-size: 1.8rem; color: var(--text-secondary); display: block; }
+    
+    .main-header { padding: 0.8rem 5%; }
+    nav { justify-content: space-between; width: 100%; }
+    .logo { font-size: 1.2rem; }
+
+    /* 3. MODAL DE CONTACTO (EL ARREGLO) */
+    #contactModal .modal-content {
+        width: 95%;        /* Ancho total */
+        margin: 20% auto;  /* Centrado vertical */
+        padding: 1.2rem;   /* Menos relleno */
+    }
+
+    #contactModal h2 { font-size: 1.5rem; }
+    #contactModal .close-btn { font-size: 32px; padding: 5px; line-height: 1; }
+
+    /* 4. SKILLS (RESPONSIVO) */
+    .skill-card { width: 240px; height: 320px; }
+    /* Ajuste de rotación para pantallas pequeñas */
+    .skill-card.prev { transform: translateX(-120px) scale(0.8) rotateY(10deg); opacity: 0.4; }
+    .skill-card.next { transform: translateX(120px) scale(0.8) rotateY(-10deg); opacity: 0.4; }
+}

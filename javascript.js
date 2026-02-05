@@ -1,4 +1,15 @@
 /* =========================================
+   0. CONFIGURACIÓN INICIAL
+   ========================================= */
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+} else {
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    }
+}
+
+/* =========================================
    1. NAVEGACIÓN (Menú Hamburguesa)
    ========================================= */
 const navSlide = () => {
@@ -252,4 +263,12 @@ if(contactForm) {
                 console.error(err);
             });
     });
+}
+
+/* =========================================
+   FUNCIONES DE UTILIDAD
+   ========================================= */
+function mostrarAlerta(event) {
+    event.preventDefault(); // Evita que el enlace te lleve al inicio (#) o recargue
+    alert("🚧 PROYECTO EN DESARROLLO 🚧\n\nEstoy finalizando la integración de los datos de la Alcaldía Benito Juárez.\n\n¡Vuelve pronto para ver el mapa interactivo!");
 }

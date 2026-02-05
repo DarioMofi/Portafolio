@@ -19,7 +19,10 @@
     </script>
 </head>
 <body>
+        <div class="heatmap-container">
+            <div class="blob blob-green"></div> <div class="blob blob-purple"></div> </div>
 
+        <div class="hero-image">
     <header class="main-header">
         <nav>
             <div class="logo">
@@ -43,7 +46,7 @@
         </nav>
     </header>
 
-    <section id="hero" class="hero-section">
+   <section id="hero" class="hero-section">
 
         <div class="hero-image">
             <img src="assets/FotoP.jpeg" alt="Foto de perfil">
@@ -55,8 +58,7 @@
             
             <p>Los datos son la mayor fuente de información sobre lo que sucede en las ciudades. Podemos conocer desde cuántas personas viven en una colonia, hacia dónde van y a qué hora vuelven, hasta qué zona presenta mayores índices de inseguridad, el alcance de los servicios urbanos o cómo se modifica la dinámica social ante el cambio de cierto uso de suelo.</p>
             
-            <p>Sin embargo, los datos solo son una abstracción; necesitamos conocer el contexto social, político y económico específico de cada territorio donde planeamos trabajar. Ahí es donde entro yo. Mi nombre es Darío Molina, soy urbanista con habilidades de programación, enfocado en ofrecer un entendimiento del territorio para tomar la mejor decisión posible.</p>
-            
+            <p>Sin embargo, los datos solo son una abstracción; necesitamos conocer el contexto social, político y económico específico de cada territorio donde planeamos trabajar, para tomar la mejor decisión posible aplico mis habilidades en análisis espacial, programación y visualización de datos geográficos.</p>
             <div class="hero-social">
                 <a href="https://linkedin.com/in/tu-usuario" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
                 <a href="https://github.com/tu-usuario" target="_blank" title="GitHub"><i class='bx bxl-github'></i></a>
@@ -151,7 +153,7 @@
         <div class="projects-grid">
             <article class="project-card">
                 <div class="project-image">
-                    <img src="assets/images/preview-tesis.jpg" alt="Mapa Inmobiliario Benito Juárez">
+                    <img src="assets/Fondo.png" alt="Mapa Inmobiliario Benito Juárez">
                 </div>
                 <div class="project-info">
                     <h4>Análisis Inmobiliario: Alcaldía Benito Juárez</h4>
@@ -161,7 +163,9 @@
                         <li>Análisis Espacial</li>
                         <li>Python</li>
                     </ul>
-                    <a href="projects/tesis-bj/index.html" class="btn-secondary" target="_blank">Explorar Mapa Completo &rarr;</a>
+                    <a href="#" class="btn-secondary" onclick="mostrarAlerta(event)">
+                        Explorar Mapa Completo &rarr;
+                    </a>
                 </div>
             </article>
         </div>
@@ -210,7 +214,7 @@
         </div>
     </div>
 
-</div>
+    </div>
     <script src="javascript.js"></script>
 </body>
 </html>
