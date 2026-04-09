@@ -1,0 +1,436 @@
+/* Lateral Dashboard - Right side now, hidden state via transform */
+.dashboard-panel {
+  width: 380px; 
+  height: calc(100% - 40px); 
+  background-color: var(--color-panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+  border-radius: 6px;
+  padding: 20px;
+  position: absolute;
+  right: 20px; 
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  backdrop-filter: blur(5px);
+
+  transform: translateX(calc(100% + 50px)); 
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dashboard-panel.panel-active {
+  transform: translateX(0);
+}
+
+.control-center {
+  margin-top: 10px; 
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Push scrollbar further to the right edge */
+  margin-right: -15px;
+  padding-right: 15px;
+}
+
+/* Custom Scrollbar for Control Center */
+.control-center::-webkit-scrollbar {
+  width: 4px;
+}
+
+.control-center::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.control-center::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+/* Time Filter (Year/Month Selection) */
+.time-filter {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px rgba(255, 255, 255,);
+  background-color: rgba(28, 28, 30, 0.5); 
+  border-radius: 4px; 
+  transition: background-color 0.2s ease;
+}
+
+.time-filter:hover {
+  background-color: rgba(88, 88, 90, 0.3); 
+}
+
+.filter-title {
+  font-family: var(--font-subheading);
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--color-grid);
+  padding-bottom: 5px;
+}
+
+.period-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.period-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* --- Estilos para Collapsible Headers --- */
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--color-grid);
+  margin-bottom: 4px; 
+}
+
+.collapsible-header:hover {
+  color: var(--color-accent);
+}
+
+.collapsible-header .filter-title {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.chevron {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+  margin-right: 5px;
+}
+
+/* --- Info Button & Modal --- */
+.header-info-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-accent); /* Verde neón sólido */
+  color: #000000; /* Letra negra para contraste */
+  border: none;
+  font-family: "Marcellus", serif; /* Fuente serif del proyecto */
+  font-size: 14px;
+  font-style: italic; /* i cursiva */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  padding: 0 1px 1px 0; /* Ajuste para centrar la cursiva */
+  line-height: 1;
+  flex-shrink: 0;
+  /* Brillo neón eliminado según solicitud */
+}
+
+.header-info-btn:hover {
+  transform: scale(1.15);
+}
+
+.header-info-modal-container {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 340px;
+  z-index: 2000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.header-info-modal-container.shifted {
+  left: 320px;
+}
+
+.header-info-modal-container.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%) translateX(-30px);
+}
+
+.header-info-content {
+  background-color: rgba(10, 10, 10, 0.95);
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 15px rgba(191, 242, 7, 0.1);
+  backdrop-filter: blur(15px);
+  position: relative;
+  pointer-events: auto;
+}
+
+.close-info-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--color-accent);
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+
+.close-info-btn:hover {
+  opacity: 1;
+}
+
+.info-title {
+  font-family: var(--font-subheading);
+  font-size: 1rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--color-grid);
+  padding-bottom: 8px;
+  padding-right: 20px;
+}
+
+.info-body {
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #ffffff;
+  white-space: pre-wrap;
+}
+
+.chevron.up {
+  transform: rotate(-135deg);
+}
+
+.collapsible-content {
+  display: none;
+  padding-top: 0px; 
+}
+
+.collapsible-content.open {
+  display: block;
+}
+
+.period-group label {
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  color: var(--color-accent); 
+  text-transform: none;
+  opacity: 0.8;
+}
+
+.date-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.month-select {
+  flex: 1;
+}
+
+.year-input {
+  width: 75px;
+  text-align: center;
+}
+
+.marathon-input {
+  background: var(--color-bg-deep);
+  border: 1px solid var(--color-accent); 
+  color: var(--color-accent); 
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  padding: 4px 4px;
+  outline: none;
+}
+
+.marathon-input:focus {
+  box-shadow: 0 0 5px var(--color-accent); 
+}
+
+.year-input::-webkit-inner-spin-button, 
+.year-input::-webkit-outer-spin-button {  
+  opacity: 1;
+  filter: invert(86%) sepia(50%) saturate(884%) hue-rotate(24deg) brightness(109%) contrast(106%);
+}
+
+.marathon-select {
+  background: var(--color-bg-deep);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  text-transform: none;
+  padding: 4px 4px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23BFF207' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  background-size: 14px;
+  padding-right: 20px;
+}
+
+.marathon-select:focus {
+  box-shadow: 0 0 5px var(--color-accent);
+}
+
+.marathon-select option {
+  background-color: var(--color-bg-deep);
+  color: var(--color-accent);
+}
+
+/* Tabs Menu */
+.panel-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-grid);
+  padding-bottom: 10px;
+}
+
+.tab-btn {
+  background: transparent;
+  color: var(--color-accent);
+  font-family: var(--font-primary);
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  opacity: 0.5;
+  transition:
+    opacity 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+.tab-btn.active {
+  opacity: 1;
+  text-shadow: 0 0 5px var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+.tab-btn:hover {
+  opacity: 0.8;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* UI Layer Controls */
+.layer-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+  overflow: hidden;
+  max-height: 500px;
+  opacity: 1;
+}
+
+.layer-controls.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+.control-item {
+  display: flex;
+  align-items: flex-start; 
+  gap: 0; 
+  cursor: pointer;
+}
+
+.control-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0; 
+  margin-top: 1px; 
+  border: 1px solid var(--color-accent);
+  border-radius: 0;
+  background-color: var(--color-bg-deep); 
+  cursor: pointer;
+  position: relative;
+  display: grid;
+  place-content: center;
+}
+
+.control-item input[type="checkbox"]:not(.todas-checkbox) {
+  margin-right: 16px; 
+}
+
+.control-item input[type="checkbox"]::before {
+  content: "";
+  width: 8px; 
+  height: 8px; 
+  background-color: var(--color-accent);
+  transform: scale(0);
+}
+
+.control-item input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+.control-item span {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  color: var(--color-accent); 
+  text-transform: none;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Custom Toggle Switch for 'Todas' & Others */
+.control-item input[type="checkbox"].todas-checkbox {
+  width: 34px;
+  height: 18px;
+  border-radius: 9px;
+  border: 1px solid var(--color-accent);
+  background-color: transparent; 
+  transition: all 0.3s ease;
+  display: block;
+  margin-right: 20px;
+}
+
+.control-item input[type="checkbox"].todas-checkbox::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7); 
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.control-item input[type="checkbox"].todas-checkbox:checked {
+  background-color: var(--color-accent); 
+  border-color: var(--color-accent);
+}
+
+.control-item input[type="checkbox"].todas-checkbox:checked::before {
+  transform: translateX(14px) scale(1); 
+  background-color: var(--color-bg-deep); 
+}

@@ -1,0 +1,123 @@
+/**
+ * Estilos para las secciones de Glosario y Métodos (SPA)
+ */
+.sections-container {
+    width: 100%;
+    margin: 5px 0; /* Subimos un poco el contenido */
+    padding: 0 40px;
+    font-family: var(--font-subheading), sans-serif;
+    color: var(--color-text, #ffffff);
+}
+
+.sections-container p {
+    white-space: pre-line;
+    font-family: var(--font-primary), monospace; 
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: justify; /* Justificamos el texto */
+}
+
+.sections-title {
+    font-size: 2.5rem;
+    font-family: var(--font-heading), serif;
+    color: var(--color-accent, #00ff00);
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Glosario Acordeón */
+.glossary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.glossary-item {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+    transition: all 0.3s ease;
+}
+
+/* Eliminamos el hover global anterior */
+.glossary-item:hover {
+    background: transparent;
+}
+
+.glossary-header {
+    width: 320px; /* Ancho estándar fijo */
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.glossary-header:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-accent);
+}
+
+.glossary-item.active .glossary-header {
+    background: var(--color-accent, #00ff00);
+    color: #000000;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.glossary-term {
+    font-family: var(--font-subheading), sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: inherit; /* Toma el color del header (blanco o negro) */
+    margin: 0;
+}
+
+.glossary-arrow {
+    display: none; /* Look minimalista como en la imagen */
+}
+
+.glossary-content {
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+}
+
+.glossary-item.active .glossary-content {
+    max-height: 800px; /* Incrementado para definiciones largas */
+}
+
+.glossary-definition {
+    padding: 25px 0; /* Sin padding lateral para que use todo el ancho */
+    line-height: 1.7;
+    font-size: 1.1rem;
+    font-family: var(--font-primary), monospace;
+    color: #cccccc;
+    white-space: pre-line;
+    text-align: justify; /* Justificamos el texto */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separador sutil */
+}
+
+/* Scrollbar personalizado para las secciones principales */
+#view-glosario::-webkit-scrollbar,
+#view-metodos::-webkit-scrollbar {
+    width: 6px;
+}
+#view-glosario::-webkit-scrollbar-thumb,
+#view-metodos::-webkit-scrollbar-thumb {
+    background: var(--color-accent, #00ff00);
+    border-radius: 10px;
+}

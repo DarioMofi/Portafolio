@@ -467,6 +467,12 @@ h3 { text-align: center; font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 
 /* =========================================
    7. PROYECTOS Y FOOTER
    ========================================= */
+.projects-section {
+    padding: 1.9rem 4%;
+    max-width: 1650px;
+    margin: 0 auto;
+}
+
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
 .project-card { background: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; transition: var(--transition); }
 .project-card:hover { transform: translateY(-7px); box-shadow: 0 0 20px rgba(124, 77, 255, 0.2); border: 1px solid var(--accent-color); }

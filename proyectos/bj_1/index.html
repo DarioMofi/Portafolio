@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desarrollos Inmobiliarios Benito Juarez</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;700&family=Marcellus&family=Michroma&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+    
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Turf.js para análisis espacial en cliente -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    
+    <!-- Estilos Modulares -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/map-components.css">
+    <link rel="stylesheet" href="css/sections.css">
+</head>
+<body>
+    <!-- Grid overlay background effect -->
+    <div class="bg-grid"></div>
+
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+        <a href="../../index.html" class="portfolio-link marathon-btn" title="Volver al Portafolio">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path>
+            </svg>
+        </a>
+        <h1 class="header-title">Desarrollos Inmobiliarios en la Alcaldía Benito Juárez 2000 - 2023</h1>
+        
+        <nav class="nav-links">
+            <a href="#" class="nav-link" id="nav-metodos">Métodos</a>
+            <a href="#" class="nav-link" id="nav-glosario">Glosario</a>
+            <a href="#" class="nav-link active" id="nav-mapa">Mapa</a>
+        </nav>
+    </header>
+
+    <main class="app-wrapper">
+        
+        <!-- Toggle Menu Button (Floating) -->
+        <button id="toggle-panel-btn" class="marathon-btn floating-action">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 12 12 17 22 12"></polyline>
+                <polyline points="2 17 12 22 22 17"></polyline>
+            </svg>
+        </button>
+
+        <div class="left-panels-container">
+            <!-- Dynamic Legend Container -->
+            <div id="dynamic-legend" class="legend-panel hidden">
+                <h4 id="legend-title" class="legend-title">Simbología</h4>
+                <div id="legend-content" class="legend-content"></div>
+            </div>
+
+            <!-- Absorcion Legend Container -->
+            <div id="absorcion-legend" class="legend-panel hidden">
+                <h4 class="legend-title">Departamentos vendidos al mes</h4>
+                <div id="absorcion-legend-content" class="legend-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;"></div>
+            </div>
+
+            <!-- Dynamic Chart Container -->
+            <div id="dynamic-chart-panel" class="chart-panel hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--color-grid); padding-bottom: 5px;">
+                    <h4 id="chart-title" class="chart-title" style="margin: 0; border-bottom: none; padding-bottom: 0;">Gráficas</h4>
+                    <div class="extra-charts-controls" style="display: flex; gap: 12px; align-items: center;">
+                        <button id="btn-show-linechart" class="marathon-btn" style="padding: 0; margin: 0; background: transparent; display: flex; align-items: center; justify-content: center; border: none; line-height: 0; cursor: pointer; opacity: 0.7; transition: opacity 0.2s;" title="Gráfica Lineal">
+                            <svg width="12" height="7" viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="2 16 10 6 16 12 24 4 30 8"></polyline>
+                            </svg>
+                        </button>
+                        <button id="btn-show-waterfall" class="marathon-btn" style="padding: 0; margin: 0; background: transparent; display: flex; align-items: center; justify-content: center; border: none; line-height: 0; cursor: pointer; opacity: 0.7; transition: opacity 0.2s;" title="Gráfica de Cascada">
+                            <svg width="12" height="12" viewBox="0 0 22 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                                <line x1="4" y1="2" x2="4" y2="22"></line>
+                                <rect x="2" y="8" width="4" height="8" fill="currentColor" rx="0.5"></rect>
+                                <line x1="11" y1="5" x2="11" y2="20"></line>
+                                <rect x="9" y="9" width="4" height="7" fill="currentColor" rx="0.5"></rect>
+                                <line x1="18" y1="1" x2="18" y2="18"></line>
+                                <rect x="16" y="4" width="4" height="10" fill="currentColor" rx="0.5"></rect>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="chart-container" class="chart-container" style="position: relative;">
+                    <canvas id="main-pie-chart"></canvas>
+                </div>
+                <p id="chart-subtitle" class="chart-subtitle">Total Alcaldía</p>
+            </div>
+        </div>
+
+        <!-- Protagonist Map Area -->
+        <div id="map-container" class="map-area"></div>
+        <div id="map-source-legend" class="map-source-legend">
+            Fuente: Base de datos <a href="https://www.softec.com.mx/" target="_blank">Softec</a>
+        </div>
+        
+        <!-- Lateral Dashboard (Hidden by default, on the right now) -->
+        <aside id="data-panel" class="dashboard-panel panel-hidden">
+            
+            <section class="control-center">
+                <!-- Time Filter -->
+                <div class="time-filter">
+                    <div class="collapsible-header" id="header-tiempo">
+                        <h3 class="filter-title">Horizonte Temporal</h3>
+                        <span class="chevron"></span>
+                    </div>
+                    <div id="content-tiempo" class="collapsible-content" style="display: none;">
+                        <div class="period-container">
+                            <div class="period-group">
+                                <label>Desde:</label>
+                                <div class="date-controls">
+                                    <select id="month-start" class="marathon-select month-select">
+                                        <option value="01">Enero</option>
+                                        <option value="02">Febrero</option>
+                                        <option value="03">Marzo</option>
+                                        <option value="04">Abril</option>
+                                        <option value="05">Mayo</option>
+                                        <option value="06">Junio</option>
+                                        <option value="07">Julio</option>
+                                        <option value="08">Agosto</option>
+                                        <option value="09">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12">Diciembre</option>
+                                    </select>
+                                    <input type="number" id="year-start" class="marathon-input year-input" min="2000" max="2023" value="2000">
+                                </div>
+                            </div>
+                            <div class="period-group">
+                                <label>Hasta:</label>
+                                <div class="date-controls">
+                                    <select id="month-end" class="marathon-select month-select">
+                                        <option value="01">Enero</option>
+                                        <option value="02">Febrero</option>
+                                        <option value="03">Marzo</option>
+                                        <option value="04">Abril</option>
+                                        <option value="05">Mayo</option>
+                                        <option value="06">Junio</option>
+                                        <option value="07">Julio</option>
+                                        <option value="08">Agosto</option>
+                                        <option value="09">Septiembre</option>
+                                        <option value="10">Octubre</option>
+                                        <option value="11">Noviembre</option>
+                                        <option value="12" selected>Diciembre</option>
+                                    </select>
+                                    <input type="number" id="year-end" class="marathon-input year-input" min="2000" max="2023" value="2023">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="time-filter">
+                    <div class="collapsible-header" id="header-tipologia">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h3 class="filter-title">Tipología</h3>
+                            <button class="header-info-btn" data-term="Tipologías" title="Ver definición">i</button>
+                        </div>
+                        <span class="chevron"></span>
+                    </div>
+                    <div id="content-tipologia" class="collapsible-content open">
+                        <div id="layer-controls" class="layer-controls"></div>
+                    </div>
+                </div>
+
+                <div class="time-filter">
+                    <div class="collapsible-header" id="header-absorcion">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h3 class="filter-title">Absorción</h3>
+                            <button class="header-info-btn" data-term="Absorción" title="Ver definición">i</button>
+                        </div>
+                        <span class="chevron"></span>
+                    </div>
+                    <div id="content-absorcion" class="collapsible-content open">
+                        <div id="layer-controls-absorcion" class="layer-controls"></div>
+                    </div>
+                </div>
+
+                <div class="time-filter">
+                    <div class="collapsible-header" id="header-analisis">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h3 class="filter-title">Mapa de Calor</h3>
+                            <button class="header-info-btn" data-term="Mapa de Calor (Heatmap)" title="Ver definición">i</button>
+                        </div>
+                        <span class="chevron"></span>
+                    </div>
+                    <div id="content-analisis" class="collapsible-content" style="display: none;">
+                        <div class="period-container">
+                            <label class="control-item" style="margin-bottom: 0;">
+                                <input type="checkbox" id="toggle-heatmap">
+                                <span>Heatmap (Densidad de puntos)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="time-filter">
+                    <div class="collapsible-header" id="header-zonas-nucleo">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h3 class="filter-title">Zonas Núcleo</h3>
+                            <button class="header-info-btn" data-term="Zona Núcleo" title="Ver definición">i</button>
+                        </div>
+                        <span class="chevron"></span>
+                    </div>
+                    <div id="content-zonas-nucleo" class="collapsible-content" style="display: none;">
+                        <div class="period-container">
+                            <label class="control-item" style="margin-bottom: 0;">
+                                <input type="checkbox" id="toggle-zonas-nucleo">
+                                <span>Mapa de Zonas Núcleo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="time-filter">
+                    <div class="collapsible-header" id="header-indicadores">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <h3 class="filter-title">Indicadores de Vivienda</h3>
+                            <button class="header-info-btn" data-term="Indicadores de Vivienda" title="Ver definición">i</button>
+                        </div>
+                        <span class="chevron"></span>
+                    </div>
+                    <div id="content-indicadores" class="collapsible-content" style="display: none;">
+                        <div class="period-container">
+                            <div class="period-group">
+                                <label>Variable:</label>
+                                <div class="date-controls">
+                                    <select id="indicador-tipo" class="marathon-select month-select">
+                                        <option value="none">--- Selecciona un Indicador ---</option>
+                                        <option value="pir">PIR</option>
+                                        <option value="hai">HAI</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="period-group" id="vivienda-group" style="opacity: 0.5; pointer-events: none;">
+                                <label>Tipología:</label>
+                                <div class="date-controls">
+                                    <select id="indicador-vivienda" class="marathon-select month-select" disabled>
+                                        <option value="med">Media</option>
+                                        <option value="res">Residencial</option>
+                                        <option value="resp">Residencial Plus</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+                    </div>
+                </div>
+            </section>
+        </aside>
+
+        <style>
+            .right-panels-container {
+                position: absolute;
+                right: -450px;
+                top: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                z-index: 1000;
+                pointer-events: none;
+                transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+            .right-panels-container.open-panel {
+                right: 20px;
+            }
+            .right-panels-container > * {
+                pointer-events: auto;
+            }
+            .right-chart-panel {
+                width: 380px;
+                background-color: rgba(10,10,10,0.85);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 6px;
+                padding: 10px 12px;
+                backdrop-filter: blur(10px);
+                animation: panelFadeIn 0.35s ease forwards;
+            }
+            @keyframes panelFadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @media (max-width: 768px) {
+                .right-panels-container {
+                    top: auto;
+                    bottom: -800px;
+                    right: 10px;
+                    transition: bottom 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                }
+                .right-panels-container.open-panel {
+                    bottom: 20px;
+                    right: 10px;
+                }
+                .right-chart-panel {
+                    width: calc(100vw - 20px);
+                }
+            }
+        </style>
+        <div id="extra-charts-box" class="right-panels-container">
+            <!-- Panel 1: Gráfica Lineal -->
+            <div id="line-chart-panel" class="right-chart-panel" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid var(--color-grid); padding-bottom: 5px;">
+                    <h2 id="analisis-evolutivo-title" style="margin: 0; font-family: var(--font-subheading); font-size: 0.9rem; color: var(--color-accent); text-transform: uppercase;">Evolución de desarrollos</h2>
+                    <button id="btn-close-line-chart" style="padding: 0; margin: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;" title="Cerrar">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div id="line-chart-container" style="position: relative; width: 100%; height: 280px;">
+                    <canvas id="line-chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Panel 2: Gráfica Cascada -->
+            <div id="waterfall-chart-panel" class="right-chart-panel" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; border-bottom: 1px solid var(--color-grid); padding-bottom: 5px;">
+                    <h4 style="margin: 0; font-family: var(--font-subheading); font-size: 0.9rem; color: var(--color-accent); text-transform: uppercase;">Tasa de Crecimiento</h4>
+                    <button id="btn-close-waterfall-chart" style="padding: 0; margin: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;" title="Cerrar">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div id="waterfall-chart-container" style="position: relative; width: 100%; height: 260px;">
+                    <canvas id="waterfall-chart-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overlay Sections (Glosario & Métodos) -->
+        <section id="view-glosario" class="content-section section-hidden">
+            <div class="sections-container">
+                <h1 class="sections-title">Glosario de Términos</h1>
+                <div id="glossary-content-target" class="glossary-list">
+                    <!-- Contenido dinámico inyectado por ui.js -->
+                </div>
+            </div>
+        </section>
+
+        <section id="view-metodos" class="content-section section-hidden">
+            <div class="sections-container">
+                <h1 class="sections-title">Metodología</h1>
+                <div id="metodologia-content-target" class="glossary-list">
+                    <!-- Contenido dinámico inyectado por ui.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Info Modal -->
+        <div id="header-info-modal" class="header-info-modal-container hidden">
+            <div class="header-info-content">
+                <button id="close-info-modal" class="close-info-btn">&times;</button>
+                <h4 id="info-modal-title" class="info-title">Título</h4>
+                <div id="info-modal-body" class="info-body">Definición...</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/metodologia-data.js"></script>
+    <script src="js/glossary-data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/graficas.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

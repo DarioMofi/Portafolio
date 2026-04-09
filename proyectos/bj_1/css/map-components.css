@@ -1,0 +1,235 @@
+/* Container for left stacked panels */
+.left-panels-container {
+  position: absolute;
+  top: 80px; 
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 50;
+  pointer-events: none; /* Let clicks pass through empty space */
+}
+
+/* Dynamic Legend Container */
+.legend-panel {
+  width: 280px;
+  background-color: var(--color-panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 15px;
+  z-index: 50;
+  backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+}
+
+.legend-panel.hidden {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
+
+.legend-title {
+  font-family: var(--font-subheading);
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--color-grid);
+  padding-bottom: 5px;
+}
+
+.legend-content {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  color: var(--color-accent); 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-gradient {
+  width: 100%;
+  height: 10px;
+  border-radius: 2px;
+  margin-bottom: 5px;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+}
+
+/* Dynamic Chart Container */
+.chart-panel {
+  width: 280px;
+  background-color: var(--color-panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 15px;
+  z-index: 50;
+  backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: auto;
+}
+
+.chart-panel.hidden {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
+
+.chart-title {
+  font-family: var(--font-subheading);
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--color-grid);
+  padding-bottom: 5px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 180px; 
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-subtitle {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  color: var(--color-accent); 
+  text-align: center;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* Custom HTML Tooltip for Chart.js */
+#chartjs-tooltip {
+  opacity: 0;
+  position: absolute;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(204, 255, 0, 0.5);
+  border-radius: 4px;
+  pointer-events: none;
+  transform: translate(-50%, 0);
+  transition: all .1s ease;
+  z-index: 1000;
+  padding: 8px 10px;
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  min-width: 160px;
+}
+.custom-tooltip-title {
+  margin: 0 0 4px 0;
+  font-weight: bold;
+  text-align: left;
+}
+.custom-tooltip-body {
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Protagonist Map Area - Full screen initially */
+.map-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Adjust MapLibre Zoom Controls (smaller size) */
+.maplibregl-ctrl-bottom-left .maplibregl-ctrl-group {
+  transform: scale(0.8);
+  transform-origin: bottom left;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+/* MapLibre Overrides for the new aesthetic */
+.maplibregl-ctrl-group {
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid var(--color-accent) !important;
+  border-radius: 0 !important;
+}
+.maplibregl-ctrl button {
+  border-bottom: 1px solid var(--color-accent) !important;
+}
+.maplibregl-ctrl button:last-child {
+  border-bottom: none !important;
+}
+.maplibregl-ctrl button .maplibregl-ctrl-icon {
+  filter: invert(86%) sepia(50%) saturate(884%) hue-rotate(24deg)
+    brightness(109%) contrast(106%) !important;
+}
+
+/* Map Source Legend (next to zoom buttons) */
+.map-source-legend {
+  position: absolute;
+  bottom: 25px; /* Aligned with the bottom of the zoom control */
+  left: 65px;   /* Positioned to the right of the control group */
+  z-index: 40;
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  color: #ffffff; /* Letras blancas */
+  background-color: rgba(0, 0, 0, 0.7); /* Recuadro negro con transparencia */
+  padding: 5px 10px;
+  border-radius: 4px;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-source-legend a {
+  color: var(--color-accent); /* Color verde neón */
+  text-decoration: none; /* Elimina el subrayado */
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.map-source-legend a:hover {
+  opacity: 0.8;
+}
+
+/* MapLibre Popup Overrides for Marathon Theme */
+.marathon-popup .maplibregl-popup-content {
+  background-color: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(204, 255, 0, 0.5);
+  color: var(--color-accent);
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  padding: 4px 8px;
+  box-shadow: 0 0 8px rgba(204, 255, 0, 0.15);
+  backdrop-filter: blur(4px);
+}
+
+.marathon-popup .maplibregl-popup-tip {
+  display: none;
+}
