@@ -48,10 +48,11 @@
   .app-wrapper {
     display: flex;
     flex-direction: column;
-    height: calc(100% - 75px);
-    margin-top: 75px; /* Compactado al máximo */
+    height: calc(100dvh - 75px); /* Altura dinámica para evitar recortes del navegador */
+    margin-top: 75px; 
     overflow: hidden;
     background-color: #000;
+    position: relative; /* Base para el bottom absoluto */
   }
 
   /* 2. Top Section: Map (Fijo por defecto con handle inferior) */
@@ -71,10 +72,11 @@
 
   /* 3. Bottom Section: Data (Estilo Bottom Sheet con Handle) */
   .left-panels-container {
-    position: relative !important;
-    top: auto !important;   /* Reset desktop position */
-    left: auto !important;  /* Reset desktop position */
-    height: 25px !important; /* Altura del handle reducido */
+    position: absolute !important; /* Forzado al fondo absoluto */
+    bottom: 0 !important;
+    left: 0 !important;
+    top: auto !important;   
+    height: 25px !important; 
     padding: 0 15px 15px 15px !important;
     opacity: 1 !important;
     overflow: hidden !important;
@@ -85,9 +87,9 @@
     background-color: #050505;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     transition: height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 20;
+    z-index: 200; /* Prioridad máxima */
     order: 2; 
-    pointer-events: auto !important; /* Habilitar interacción */
+    pointer-events: auto !important;
   }
 
   .app-wrapper.split-active .left-panels-container {
