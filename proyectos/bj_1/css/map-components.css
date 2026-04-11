@@ -1,7 +1,7 @@
 /* Container for left stacked panels */
 .left-panels-container {
   position: absolute;
-  top: 80px; 
+  top: 60px; 
   left: 20px;
   display: flex;
   flex-direction: column;

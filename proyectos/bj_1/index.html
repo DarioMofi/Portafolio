@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/map-components.css">
     <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <!-- Grid overlay background effect -->
@@ -50,7 +51,7 @@
     <main class="app-wrapper">
         
         <!-- Toggle Menu Button (Floating) -->
-        <button id="toggle-panel-btn" class="marathon-btn floating-action">
+        <button id="toggle-panel-btn" class="marathon-btn floating-action" title="Filtros">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                 <polyline points="2 12 12 17 22 12"></polyline>
@@ -58,7 +59,21 @@
             </svg>
         </button>
 
-        <div class="left-panels-container">
+        <!-- New Mobile Toggle for Left Data Panels -->
+        <button id="mobile-data-btn" class="mobile-data-toggle marathon-btn" title="Ver Datos">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+        </button>
+
+        <div class="left-panels-container mobile-hidden">
+            <!-- Handle para despliegue móvil -->
+            <div id="mobile-pull-handle" class="mobile-pull-handle">
+                <div class="handle-bar"></div>
+            </div>
+            
             <!-- Dynamic Legend Container -->
             <div id="dynamic-legend" class="legend-panel hidden">
                 <h4 id="legend-title" class="legend-title">Simbología</h4>
@@ -297,17 +312,29 @@
             }
             @media (max-width: 768px) {
                 .right-panels-container {
-                    top: auto;
-                    bottom: -800px;
-                    right: 10px;
-                    transition: bottom 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                    top: 50% !important;
+                    left: 50% !important;
+                    right: auto !important;
+                    bottom: auto !important;
+                    transform: translate(-50%, -20%) !important;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
                 }
                 .right-panels-container.open-panel {
-                    bottom: 20px;
-                    right: 10px;
+                    transform: translate(-50%, -50%) !important;
+                    opacity: 1;
+                    pointer-events: auto;
                 }
                 .right-chart-panel {
-                    width: calc(100vw - 20px);
+                    width: 85vw !important;
+                    padding: 12px !important;
+                }
+                .right-chart-panel .chart-title {
+                    font-size: 0.85rem !important;
+                }
+                #line-chart-container, #waterfall-chart-container {
+                    height: 200px !important; /* Más pequeñas */
                 }
             }
         </style>

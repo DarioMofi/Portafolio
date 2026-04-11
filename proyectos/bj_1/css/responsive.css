@@ -1,0 +1,406 @@
+/* Media Queries for Mobile (bj_1) - Split Screen 70/30 */
+@media (max-width: 768px) {
+  /* 1. Header adjustment */
+  .top-nav {
+    height: auto;
+    min-height: 40px;
+    padding: 6px 15px 4px 15px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
+    background-color: #000 !important; /* Asegurar fondo negro sólido */
+  }
+
+  .portfolio-link {
+    position: static;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    font-size: 0.8rem;
+    white-space: normal;
+    width: auto;
+    flex: 1;
+    line-height: 1.1;
+    padding-left: 0; 
+    padding-right: 10px;
+    margin: 0;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-right: 0;
+    margin-top: 5px;
+    padding-left: 0;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 8px 0;
+  }
+
+  /* --- Split Screen Layout --- */
+  .app-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 75px);
+    margin-top: 75px; /* Compactado al máximo */
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  /* 2. Top Section: Map (Fijo por defecto con handle inferior) */
+  .map-area {
+    position: relative;
+    height: calc(100% - 25px) !important; /* Deja espacio al handle reducido */
+    width: 100% !important;
+    flex-shrink: 0;
+    z-index: 10;
+    order: 1; 
+    transition: height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .app-wrapper.split-active .map-area {
+    height: 70% !important;
+  }
+
+  /* 3. Bottom Section: Data (Estilo Bottom Sheet con Handle) */
+  .left-panels-container {
+    position: relative !important;
+    top: auto !important;   /* Reset desktop position */
+    left: auto !important;  /* Reset desktop position */
+    height: 25px !important; /* Altura del handle reducido */
+    padding: 0 15px 15px 15px !important;
+    opacity: 1 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #050505;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 20;
+    order: 2; 
+    pointer-events: auto !important; /* Habilitar interacción */
+  }
+
+  .app-wrapper.split-active .left-panels-container {
+    height: 30% !important;
+    overflow-y: auto !important;
+    border-top: 2px solid var(--color-accent);
+  }
+
+  /* Estilo del Tirador (Handle) */
+  .mobile-pull-handle {
+    width: 100%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .handle-bar {
+    width: 40px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+  }
+
+  .app-wrapper.split-active .handle-bar {
+    background-color: var(--color-accent);
+  }
+
+  /* Paneles internos de datos apilados */
+  /* Paneles internos de datos apilados */
+  .legend-panel, .chart-panel {
+    position: relative;
+    width: 100% !important;
+    max-width: none !important;
+    margin-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: none;
+    padding: 8px 12px !important;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .legend-title, .chart-title {
+    font-size: 0.75rem !important;
+    margin-bottom: 5px !important;
+    padding-bottom: 5px !important;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Indicador de colapso */
+  .legend-title::after, .chart-title::after {
+    content: "▼";
+    font-size: 0.6rem;
+    transition: transform 0.3s ease;
+    opacity: 0.5;
+  }
+
+  .panel-collapsed .legend-title::after, 
+  .panel-collapsed .chart-title::after {
+    transform: rotate(-90deg);
+  }
+
+  .panel-collapsed .legend-content,
+  .panel-collapsed #line-chart-container,
+  .panel-collapsed #waterfall-container,
+  .panel-collapsed .extra-charts-controls {
+    display: none !important;
+  }
+
+  .legend-item {
+    font-size: 0.7rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* 4. Overlays restringidos al 70% superior (Mapa) */
+  .dashboard-panel {
+    width: 80% !important; /* Más estrecho para dejar espacio al botón de la izquierda */
+    right: 2% !important;
+    left: auto !important;
+    top: 10px !important;
+    height: calc(70% - 20px) !important;
+    max-height: 70% !important;
+    z-index: 500;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    padding-top: 20px !important; /* Padding normal, ya no de cortesía */
+    overflow-y: auto;
+  }
+
+  .dashboard-panel .filter-title {
+    font-size: 0.75rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Ajuste de Grids internos */
+  #layer-controls, #layer-controls-absorcion {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px 10px !important; /* Reducción drástica del gap horizontal */
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+
+  .dashboard-panel .control-item {
+    font-size: 0.68rem !important; /* Más pequeño para que quepa el texto */
+    margin-bottom: 4px !important;
+    gap: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /* Reducción de Checkboxes */
+  .dashboard-panel .control-item input[type="checkbox"] {
+    width: 14px !important;
+    height: 14px !important;
+    margin-right: 6px !important;
+    margin-top: 0 !important;
+  }
+
+  .dashboard-panel .control-item input[type="checkbox"]::before {
+    width: 6px;
+  }
+  .chart-container {
+    height: 140px !important; /* Más pequeña para ahorrar espacio */
+    width: 140px !important;
+    margin: 0 auto;
+  }
+
+  .chart-title {
+    font-size: 0.75rem !important;
+  }
+
+  /* Reducción de Switch 'Todas' */
+  .dashboard-panel .control-item input[type="checkbox"].todas-checkbox {
+    width: 26px !important;
+    height: 14px !important;
+    margin-right: 8px !important;
+    border-radius: 7px !important;
+  }
+
+  .dashboard-panel .control-item input[type="checkbox"].todas-checkbox::before {
+    width: 10px !important;
+    height: 10px !important;
+    top: 1px !important;
+    left: 2px !important;
+  }
+
+  .dashboard-panel .control-item input[type="checkbox"].todas-checkbox:checked::before {
+    transform: translateX(10px) !important;
+  }
+
+  /* Reducción de puntos de color en Tipología */
+  .dashboard-panel .control-item span span {
+    width: 8px !important;
+    height: 8px !important;
+    margin-right: 4px !important;
+    margin-top: 0 !important;
+  }
+
+  .dashboard-panel .marathon-select, 
+  .dashboard-panel .marathon-input {
+    font-size: 0.7rem !important;
+    padding: 3px 6px !important;
+    height: auto !important;
+  }
+
+  .dashboard-panel .collapsible-header {
+    padding: 6px 8px !important;
+  }
+
+  .content-section {
+    position: absolute;
+    top: 0;
+    height: 100% !important; /* Full screen para lectura de Glosario y Métodos */
+    background-color: rgba(0, 0, 0, 0.98);
+    z-index: 600;
+    padding: 20px 15px;
+  }
+
+  .content-container {
+    padding: 20px 15px;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* 5. Botones de Acción sobre el Mapa */
+  #toggle-panel-btn {
+    width: 50px !important; /* Más grande */
+    height: 50px !important;
+    position: absolute !important;
+    top: 40px !important; 
+    left: 15px !important; 
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 1000 !important;
+    background: transparent !important; 
+    border: none !important;            
+    border-radius: 0 !important;         
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent) !important; /* Color forzado */
+  }
+
+  #toggle-panel-btn svg {
+    width: 26px !important; /* Icono más grande */
+    height: 26px !important;
+  }
+
+  /* Botón de control de datos móviles ocultado por diseño de handle */
+  #mobile-data-btn {
+    display: none !important;
+  }
+
+  /* 6. Modals de Información */
+  .header-info-modal-container {
+    width: 80vw;
+    left: 10vw;
+    top: 50%; /* Centrado en el medio de la pantalla */
+    transform: translateY(-50%);
+  }
+
+  .header-info-content {
+    padding: 15px !important;
+  }
+
+  .info-title {
+    font-size: 0.9rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  .info-body {
+    font-size: 0.75rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .header-info-modal-container.shifted {
+    left: 5vw; 
+  }
+
+  /* 7. Ajustes de Mapa y Leyenda Fuente */
+  .maplibregl-ctrl-group {
+    display: none !important;
+  }
+
+  .map-source-legend {
+    position: absolute !important;
+    bottom: 30px !important; /* Por defecto sobre el handle de 25px */
+    left: 5px !important;
+    padding: 2px 4px;
+    font-size: 0.5rem;
+    opacity: 0.6;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    transition: bottom 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .app-wrapper.split-active .map-source-legend {
+    bottom: calc(30% + 5px) !important; /* Sube cuando los datos se abren */
+  }
+
+  /* 8. Secciones (Glosario/Métodos) */
+  .sections-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  .glossary-definition, .metodologia-definition {
+    font-size: 0.9rem !important; /* Estándar de Glosario */
+    line-height: 1.5;
+    color: #cccccc;
+    text-align: justify;
+  }
+  .metodologia-term {
+    font-family: var(--font-subheading);
+    font-size: 1.1rem !important;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .glossary-header {
+    width: 100% !important;
+    padding: 12px 10px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .glossary-term {
+    width: auto !important;
+    max-width: 85%;
+    white-space: normal !important;
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+  }
+  .metodologia-definition table {
+    width: 100% !important;
+    font-size: 0.75rem;
+  }
+}
+
+/* Hide toggle on desktop */
+.mobile-data-toggle {
+  display: none;
+}

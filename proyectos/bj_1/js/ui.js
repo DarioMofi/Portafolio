@@ -28,10 +28,12 @@ window.AppUI_Logic = (function() {
         
         const chartPanel = document.getElementById('dynamic-chart-panel');
 
-        if (!isIndicadoresActive && !isHeatmapActive && !isZonasNucleoActive && isPanelOpen) {
+        // EN PC: Ocultamos leyendas si el panel está abierto para evitar redundancias, 
+        // EXCEPTO si el Mapa de Calor, Indicadores o Zonas Núcleo están activos.
+        if (window.innerWidth > 768 && isPanelOpen && !isHeatmapActive && !isIndicadoresActive && !isZonasNucleoActive) {
             legendPanel.classList.add('hidden');
             legendPanel.style.display = 'none';
-            if(chartPanel) {
+            if (chartPanel) {
                 chartPanel.classList.add('hidden');
                 chartPanel.style.display = 'none';
             }
@@ -151,10 +153,14 @@ window.AppUI_Logic = (function() {
         const dataPanel = document.getElementById('data-panel');
         const isPanelOpen = dataPanel && dataPanel.classList.contains('panel-active');
 
-        if (isIndicadoresActive || isHeatmapActive || isZonasNucleoActive || isPanelOpen) {
-            legendPanel.classList.add('hidden');
-            legendPanel.style.display = 'none';
-            return;
+        // EN PC: Ocultar esta leyenda si el panel derecho está abierto, si Zonas Núcleo está activo,
+        // o si Mapa de Calor / Indicadores de vivienda están activos.
+        if (window.innerWidth > 768) {
+            if (isPanelOpen || isZonasNucleoActive || isHeatmapActive || isIndicadoresActive) {
+                legendPanel.classList.add('hidden');
+                legendPanel.style.display = 'none';
+                return;
+            }
         }
 
         const checkedBoxes = Array.from(document.querySelectorAll('#layer-controls-absorcion input.absorcion-checkbox:checked'));
@@ -450,6 +456,18 @@ function initInfoButtons() {
         btn.addEventListener('click', (e) => {
             e.stopPropagation(); // Evitar que colapse/expanda el encabezado
             
+            // MÓVIL: Cerrar el panel de filtros si se abre un modal de info
+            if (window.innerWidth <= 768) {
+                const dataPanel = document.getElementById('data-panel');
+                const toggleBtn = document.getElementById('toggle-panel-btn');
+                const navLinks = document.querySelector('.nav-links');
+                if (dataPanel && dataPanel.classList.contains('panel-active')) {
+                    dataPanel.classList.remove('panel-active');
+                    if (toggleBtn) toggleBtn.classList.remove('is-open');
+                    if (navLinks) navLinks.classList.remove('shifted');
+                }
+            }
+            
             const termName = btn.getAttribute('data-term');
             const data = window.AppGlossary_Data || [];
             const entry = data.find(item => item.term === termName);
@@ -463,7 +481,7 @@ function initInfoButtons() {
                     modal.removeAttribute('data-active-term'); // Limpiamos el estado
                 } else {
                     titleEl.innerText = entry.term;
-                    bodyEl.innerText = entry.def;
+                    bodyEl.innerHTML = entry.def; // Cambiado de innerText a innerHTML
                     
                     // Remover botón previo si existe para evitar duplicados
                     const oldBtn = bodyEl.querySelector('.link-metodo-btn');
@@ -630,10 +648,10 @@ function initMetodologia() {
 
     container.innerHTML = data.map((item) => `
         <div class="metodologia-item" style="margin-bottom: 25px;">
-            <h3 class="metodologia-term" style="font-family: var(--font-subheading); font-size: 1.3rem; color: var(--color-accent); margin-bottom: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 8px; text-transform: uppercase;">
+            <h3 class="metodologia-term">
                 ${item.term}
             </h3>
-            <p class="metodologia-definition" style="font-family: var(--font-primary); font-size: 1.1rem; color: #cccccc; line-height: 1.7; white-space: pre-line; text-align: justify; margin-top: 5px;">${item.def.trim()}</p>
+            <div class="metodologia-definition">${item.def.trim()}</div>
         </div>
     `).join('');
 }

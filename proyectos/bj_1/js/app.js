@@ -30,18 +30,61 @@ document.addEventListener('DOMContentLoaded', () => {
         if(viewMetodos) viewMetodos.classList.add('section-hidden');
         if(viewGlosario) viewGlosario.classList.add('section-hidden');
 
+        const mobilePullHandle = document.getElementById('mobile-pull-handle');
+        const leftPanels = document.querySelector('.left-panels-container');
+
         if (activeTabId === 'nav-mapa') {
             if(navMapa) navMapa.classList.add('active');
             if(mapSourceLegend) mapSourceLegend.style.display = 'flex';
-        } else if (activeTabId === 'nav-metodos') {
-            if(navMetodos) navMetodos.classList.add('active');
-            if(viewMetodos) viewMetodos.classList.remove('section-hidden');
+            if(leftPanels) leftPanels.style.setProperty('display', 'flex', 'important');
+            if(toggleBtn) toggleBtn.style.setProperty('display', 'flex', 'important');
+        } else {
+            if(navMetodos && activeTabId === 'nav-metodos') navMetodos.classList.add('active');
+            if(viewMetodos && activeTabId === 'nav-metodos') viewMetodos.classList.remove('section-hidden');
+            
+            if(navGlosario && activeTabId === 'nav-glosario') navGlosario.classList.add('active');
+            if(viewGlosario && activeTabId === 'nav-glosario') viewGlosario.classList.remove('section-hidden');
+            
             if(mapSourceLegend) mapSourceLegend.style.display = 'none';
-        } else if (activeTabId === 'nav-glosario') {
-            if(navGlosario) navGlosario.classList.add('active');
-            if(viewGlosario) viewGlosario.classList.remove('section-hidden');
-            if(mapSourceLegend) mapSourceLegend.style.display = 'none';
+            if(leftPanels) {
+                leftPanels.classList.remove('panel-collapsed'); // Reset
+                leftPanels.style.setProperty('display', 'none', 'important');
+            }
+            if(toggleBtn) toggleBtn.style.setProperty('display', 'none', 'important');
         }
+    }
+
+    // --- Lógica del Tirador (Handle) de Datos Móviles ---
+    const mobilePullHandle = document.getElementById('mobile-pull-handle');
+    const appWrapper = document.querySelector('.app-wrapper');
+    if (mobilePullHandle && appWrapper) {
+        mobilePullHandle.addEventListener('click', () => {
+            appWrapper.classList.toggle('split-active');
+            
+            // Re-ajustar mapa después de que termine la animación de CSS (400ms)
+            setTimeout(() => {
+                const mapInstance = window.AppMap ? window.AppMap.getMap() : null;
+                if (mapInstance) {
+                    mapInstance.resize();
+                }
+            }, 450);
+        });
+    }
+
+    // --- Lógica de Colapso para Paneles Inferiores (Móvil Split-Screen) ---
+    const leftPanelsContainer = document.querySelector('.left-panels-container');
+    if (leftPanelsContainer) {
+        leftPanelsContainer.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                const header = e.target.closest('.legend-title, #chart-title');
+                if (header) {
+                    const panel = header.closest('.legend-panel, .chart-panel');
+                    if (panel) {
+                        panel.classList.toggle('panel-collapsed');
+                    }
+                }
+            }
+        });
     }
 
     if (navMapa) navMapa.addEventListener('click', (e) => { e.preventDefault(); switchTab('nav-mapa'); });
@@ -51,16 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Panel Toggle
     if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
+            const isOpening = !dataPanel.classList.contains('panel-active');
+            
             if (dataPanel) dataPanel.classList.toggle('panel-active');
             toggleBtn.classList.toggle('is-open');
             if (navLinks) navLinks.classList.toggle('shifted'); 
             
-            // "cuando se prenda el panel las graficas desaparecen"
-            if (dataPanel && dataPanel.classList.contains('panel-active')) {
-                if (extraChartsBox) {
-                    extraChartsBox.classList.remove('open-panel');
-                    window.currentChartMode = null;
-                }
+            // EN PC: Si abrimos filtros, cerramos gráficas para evitar encimado
+            if (isOpening && window.innerWidth > 768) {
+                const linePanel = document.getElementById('line-chart-panel');
+                const waterfallPanel = document.getElementById('waterfall-chart-panel');
+                if (linePanel && linePanel.style.display !== 'none') toggleChartPanel('lineal');
+                if (waterfallPanel && waterfallPanel.style.display !== 'none') toggleChartPanel('waterfall');
             }
             
             if (window.AppUI_Logic && typeof window.AppUI_Logic.updateLegend === 'function') {
@@ -99,13 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleChartPanel(mode) {
         if (!extraChartsBox) return;
 
-        // Cierra los filtros si estaban abiertos
-        if (dataPanel && dataPanel.classList.contains('panel-active')) {
-            dataPanel.classList.remove('panel-active');
-            if (toggleBtn) toggleBtn.classList.remove('is-open');
-            if (navLinks) navLinks.classList.remove('shifted');
-        }
-
         const linePanel = document.getElementById('line-chart-panel');
         const waterfallPanel = document.getElementById('waterfall-chart-panel');
         const panel = mode === 'lineal' ? linePanel : waterfallPanel;
@@ -113,6 +151,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!panel) return;
 
         const isVisible = panel.style.display !== 'none';
+
+        // EN PC: Cerramos los filtros automáticamente SOLO si vamos a abrir una gráfica
+        if (window.innerWidth > 768 && !isVisible) {
+            if (dataPanel && dataPanel.classList.contains('panel-active')) {
+                dataPanel.classList.remove('panel-active');
+                if(toggleBtn) toggleBtn.classList.remove('is-open');
+                if(navLinks) navLinks.classList.remove('shifted');
+            }
+        }
+
         panel.style.display = isVisible ? 'none' : 'block';
 
         if (!isVisible) {
@@ -235,11 +283,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         window.AppMap.toggleZonasNucleoLayer(true);
                         
-                        // Apertura automática de paneles si están cerrados
-                        const linePanel = document.getElementById('line-chart-panel');
-                        const waterfallPanel = document.getElementById('waterfall-chart-panel');
-                        if (linePanel && linePanel.style.display === 'none') toggleChartPanel('lineal');
-                        if (waterfallPanel && waterfallPanel.style.display === 'none') toggleChartPanel('waterfall');
+                        // Apertura automática de paneles SOLO en Desktop
+                        if (window.innerWidth > 768) {
+                            const linePanel = document.getElementById('line-chart-panel');
+                            const waterfallPanel = document.getElementById('waterfall-chart-panel');
+                            if (linePanel && linePanel.style.display === 'none') toggleChartPanel('lineal');
+                            if (waterfallPanel && waterfallPanel.style.display === 'none') toggleChartPanel('waterfall');
+                        }
                         
                         // Asegurar modo Alcaldía (sin colonia seleccionada) para ver las 6 líneas
                         if (window.AppUI) window.AppUI.currentColoniaFeature = null;
