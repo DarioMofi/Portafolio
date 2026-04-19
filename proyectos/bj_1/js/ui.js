@@ -179,7 +179,6 @@ window.AppUI_Logic = (function() {
             const div = document.createElement('div');
             div.style.display = 'flex';
             div.style.alignItems = 'center';
-            div.style.fontSize = '0.9rem';
             div.innerHTML = `<span>${chk.dataset.label}</span>`;
             legendContent.appendChild(div);
         });
@@ -492,7 +491,8 @@ function initInfoButtons() {
                         'Absorción': 'Clasificación de rangos de absobción',
                         'Mapa de Calor (Heatmap)': 'Mapa de calor (Heatmap)',
                         'Zona Núcleo': 'Zonas Núcleo',
-                        'Indicadores de Vivienda': 'Indicadores de Vivienda'
+                        'Indicadores de Vivienda': 'Indicadores de Vivienda',
+                        'Tasa de Crecimiento': 'Tasa de Crecimiento'
                     };
                     
                     if (metodosMapping[termName]) {

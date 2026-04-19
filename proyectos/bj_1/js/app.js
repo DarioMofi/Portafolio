@@ -38,6 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if(mapSourceLegend) mapSourceLegend.style.display = 'flex';
             if(leftPanels) leftPanels.style.setProperty('display', 'flex', 'important');
             if(toggleBtn) toggleBtn.style.setProperty('display', 'flex', 'important');
+            if(extraChartsBox) {
+                // Restaurar el display original (flex/none) basado en si hay gráficas activas
+                const linePanel = document.getElementById('line-chart-panel');
+                const waterfallPanel = document.getElementById('waterfall-chart-panel');
+                const anyVisible = (linePanel && linePanel.style.display !== 'none') || 
+                                   (waterfallPanel && waterfallPanel.style.display !== 'none');
+                extraChartsBox.style.display = anyVisible ? 'flex' : 'none';
+            }
         } else {
             if(navMetodos && activeTabId === 'nav-metodos') navMetodos.classList.add('active');
             if(viewMetodos && activeTabId === 'nav-metodos') viewMetodos.classList.remove('section-hidden');
@@ -51,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 leftPanels.style.setProperty('display', 'none', 'important');
             }
             if(toggleBtn) toggleBtn.style.setProperty('display', 'none', 'important');
+            if(extraChartsBox) {
+                extraChartsBox.style.display = 'none';
+            }
         }
     }
 

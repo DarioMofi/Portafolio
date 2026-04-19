@@ -22,6 +22,10 @@ const glossaryData = [
     {
         term: "Mapa de Calor (Heatmap)",
         def: "Un Mapa de calor o Heatmap es una representación gráfica de la intensidad de un conjunto de datos en distintos puntos geográficos, destacando áreas o zonas donde existe una mayor concentración de valores en el territorio; en este estudio se utilizó para la definición de las zonas núcleo."
+    },
+    {
+        term: "Tasa de Crecimiento",
+        def: "Representa el ritmo de incremento o decremento porcentual de los desarrollos inmobiliarios en un periodo determinado. Permite identificar tendencias de expansión o contracción del mercado habitacional mediante la comparación de datos históricos."
     }
 ];
 

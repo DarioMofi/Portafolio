@@ -280,36 +280,6 @@
         </aside>
 
         <style>
-            .right-panels-container {
-                position: absolute;
-                right: -450px;
-                top: 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                z-index: 1000;
-                pointer-events: none;
-                transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            }
-            .right-panels-container.open-panel {
-                right: 20px;
-            }
-            .right-panels-container > * {
-                pointer-events: auto;
-            }
-            .right-chart-panel {
-                width: 380px;
-                background-color: rgba(10,10,10,0.85);
-                border: 1px solid rgba(255,255,255,0.1);
-                border-radius: 6px;
-                padding: 10px 12px;
-                backdrop-filter: blur(10px);
-                animation: panelFadeIn 0.35s ease forwards;
-            }
-            @keyframes panelFadeIn {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
             @media (max-width: 768px) {
                 .right-panels-container {
                     top: 50% !important;
@@ -358,7 +328,10 @@
             <!-- Panel 2: Gráfica Cascada -->
             <div id="waterfall-chart-panel" class="right-chart-panel" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; border-bottom: 1px solid var(--color-grid); padding-bottom: 5px;">
-                    <h4 style="margin: 0; font-family: var(--font-subheading); font-size: 0.9rem; color: var(--color-accent); text-transform: uppercase;">Tasa de Crecimiento</h4>
+                    <div style="display: flex; align-items: center;">
+                        <h4 style="margin: 0; font-family: var(--font-subheading); font-size: 0.9rem; color: var(--color-accent); text-transform: uppercase;">Tasa de Crecimiento</h4>
+                        <button class="header-info-btn" data-term="Tasa de Crecimiento" style="margin-left: 8px;">i</button>
+                    </div>
                     <button id="btn-close-waterfall-chart" style="padding: 0; margin: 0; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;" title="Cerrar">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>

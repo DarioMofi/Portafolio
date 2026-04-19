@@ -1,22 +1,23 @@
 /* Container for left stacked panels */
 .left-panels-container {
   position: absolute;
-  top: 60px; 
-  left: 20px;
+  top: 7vh; /* Aumentar separación con botón de toggle */
+  left: 1vw; /* Más pegado a la izquierda */
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.4em;
   z-index: 50;
-  pointer-events: none; /* Let clicks pass through empty space */
+  pointer-events: none;
+  font-size: clamp(10px, 1.3vh, 15px); /* Escala base que ajusta todo lo demás */
 }
 
 /* Dynamic Legend Container */
 .legend-panel {
-  width: 280px;
+  width: 24em; /* Aumentado de 20em */
   background-color: var(--color-panel-bg);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  padding: 15px;
+  border-radius: 0.4em;
+  padding: 1.07em;
   z-index: 50;
   backdrop-filter: blur(5px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -31,28 +32,36 @@
 
 .legend-title {
   font-family: var(--font-subheading);
-  font-size: 0.9rem;
+  font-size: 1.05em;
   color: var(--color-accent);
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 0.7em;
   border-bottom: 1px solid var(--color-grid);
-  padding-bottom: 5px;
+  padding-bottom: 0.35em;
 }
 
 .legend-content {
   font-family: var(--font-primary);
-  font-size: 0.75rem;
+  font-size: 0.85em;
   color: var(--color-accent); 
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.6em;
+}
+
+#legend-content {
+  font-size: 0.95em; /* Un poco más grande para Simbología */
+}
+
+#absorcion-legend-content {
+  font-size: 1em; /* Restaurado a un tamaño legible pero pequeño */
 }
 
 .legend-gradient {
   width: 100%;
-  height: 10px;
-  border-radius: 2px;
-  margin-bottom: 5px;
+  height: 0.7em;
+  border-radius: 0.15em;
+  margin-bottom: 0.35em;
 }
 
 .legend-labels {
@@ -65,23 +74,23 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.6em;
 }
 
 .legend-color-box {
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+  width: 1.15em;
+  height: 1.15em;
+  border-radius: 0.15em;
+  box-shadow: inset 0 0 0.15em rgba(0,0,0,0.5);
 }
 
 /* Dynamic Chart Container */
 .chart-panel {
-  width: 280px;
+  width: 24em; /* Aumentado de 20em */
   background-color: var(--color-panel-bg);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-  padding: 15px;
+  border-radius: 0.4em;
+  padding: 1.07em;
   z-index: 50;
   backdrop-filter: blur(5px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -96,17 +105,17 @@
 
 .chart-title {
   font-family: var(--font-subheading);
-  font-size: 0.9rem;
+  font-size: 1.05em;
   color: var(--color-accent);
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 0.7em;
   border-bottom: 1px solid var(--color-grid);
-  padding-bottom: 5px;
+  padding-bottom: 0.35em;
 }
 
 .chart-container {
   width: 100%;
-  height: 180px; 
+  height: 12.85em; 
   position: relative;
   display: flex;
   justify-content: center;
@@ -160,10 +169,22 @@
 
 /* Adjust MapLibre Zoom Controls (smaller size) */
 .maplibregl-ctrl-bottom-left .maplibregl-ctrl-group {
-  transform: scale(0.8);
   transform-origin: bottom left;
-  margin-bottom: 20px;
-  margin-left: 10px;
+  margin-bottom: 2vh;
+  margin-left: 1vw;
+  border: 1px solid var(--color-accent) !important;
+}
+
+.maplibregl-ctrl-group button {
+  width: clamp(18px, 2.8vh, 24px) !important;
+  height: clamp(18px, 2.8vh, 24px) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.maplibregl-ctrl-icon {
+  transform: scale(0.75) !important; /* Ícono mucho más pequeño */
 }
 
 /* MapLibre Overrides for the new aesthetic */
@@ -186,21 +207,21 @@
 /* Map Source Legend (next to zoom buttons) */
 .map-source-legend {
   position: absolute;
-  bottom: 25px; /* Aligned with the bottom of the zoom control */
-  left: 65px;   /* Positioned to the right of the control group */
+  bottom: 2vh; 
+  left: clamp(35px, 3.5vw, 55px); /* Aún más pegado a la izquierda */
   z-index: 40;
   font-family: var(--font-primary);
-  font-size: 0.7rem;
+  font-size: clamp(0.65rem, 1vh, 0.85rem);
   color: #ffffff; /* Letras blancas */
   background-color: rgba(0, 0, 0, 0.7); /* Recuadro negro con transparencia */
-  padding: 5px 10px;
+  padding: 0.4vh 0.8vw;
   border-radius: 4px;
   pointer-events: auto;
   transition: opacity 0.3s ease;
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.4vw;
   backdrop-filter: blur(2px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -232,4 +253,48 @@
 
 .marathon-popup .maplibregl-popup-tip {
   display: none;
+}
+
+/* Right side panels for extra charts */
+.right-panels-container {
+  position: absolute;
+  right: -50vw;
+  top: 5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
+  z-index: 1000;
+  pointer-events: none;
+  transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-size: clamp(10px, 1.3vh, 15px); /* Misma escala que el sidebar izquierdo */
+}
+
+.right-panels-container.open-panel {
+  right: 2vw;
+}
+
+.right-panels-container > * {
+  pointer-events: auto;
+}
+
+.right-chart-panel {
+  width: clamp(300px, 28vw, 420px);
+  background-color: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.4em;
+  padding: 0.8em 1em;
+  backdrop-filter: blur(10px);
+  animation: panelFadeIn 0.35s ease forwards;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.right-chart-panel .chart-title {
+  font-family: var(--font-subheading);
+  font-size: 1.05em;
+  color: var(--color-accent);
+  text-transform: uppercase;
 }

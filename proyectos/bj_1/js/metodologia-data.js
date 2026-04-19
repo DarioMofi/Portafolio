@@ -8,6 +8,17 @@ const metodologiaData = [
         def: "Los datos provienen de la base de datos de Softec, una empresa especializada en la consultoría e investigación inmobiliaria en México, detallando características de desarrollos inmobiliarios en la Alcaldía Benito Juárez desde el año 2000 al segundo trimestre de 2023."
     },
     {
+        term: "Tasa de Crecimiento",
+        def: `Este indicador analiza la variación porcentual anual de la oferta inmobiliaria. Permite cuantificar el dinamismo del sector, identificando momentos de auge o saturación mediante el cálculo de la diferencia relativa entre el volumen de desarrollos de un periodo frente a su antecesor inmediato.
+        <div style="display: flex; align-items: center; justify-content: center; font-family: 'Times New Roman', Times, serif; font-size: 1.3rem; font-style: italic; margin-top: 30px; color: #eee;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <span style="border-bottom: 1px solid rgba(255,255,255,0.7); padding: 0 15px 4px 15px;">Valor Final &minus; Valor Inicial</span>
+                <span style="padding: 4px 15px 0 15px;">Valor Inicial</span>
+            </div>
+            <span style="margin-left: 15px; font-style: normal;">&times; 100</span>
+        </div>`
+    },
+    {
         term: "Clasificación de rangos de absorción",
         def: `Para el análisis de la absorción se clasificó este valor en 10 rangos mediante una agrupación en intervalos de amplitud variable, ya que los datos no se distribuyen de forma uniforme (distribución normal); se puede notar una distribución asimétrica positiva (sesgada a la derecha). Lo cual significa que la gran mayoría de las unidades de análisis se concentran en los valores bajos del ritmo de absorción (0.5 y 1 departamento vendido al mes), mientras que los valores altos son más escasos.
         <table style="width: 40%; border-collapse: collapse; margin-top: 15px; margin-left: auto; margin-right: auto; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2);">
