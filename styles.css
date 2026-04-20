@@ -121,7 +121,7 @@ i { vertical-align: middle; margin-right: 5px; }
 nav { display: flex; justify-content: space-between; align-items: center; }
 
 .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); letter-spacing: 1px; display: flex; align-items: center; }
-.logo i { color: var(--accent-color); font-size: 1.8rem; }
+.logo i, .logo .material-symbols-outlined { color: var(--accent-color); font-size: 1.8rem; margin-right: 10px; }
 
 .nav-links { display: flex; gap: 2rem; }
 .nav-links a { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); color: var(--text-secondary); display: flex; align-items: center; }
